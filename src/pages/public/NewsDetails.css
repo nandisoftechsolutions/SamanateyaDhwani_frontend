@@ -1,0 +1,352 @@
+/* ========================================
+   News Details Page
+======================================== */
+
+.news-details-page {
+  min-height: 70vh;
+
+  background: #f7f7f7;
+}
+
+.news-details-section {
+  padding: 40px 0 60px;
+}
+
+.news-details-layout {
+  display: grid;
+
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+
+  gap: 30px;
+
+  align-items: start;
+}
+
+
+/* ========================================
+   Article
+======================================== */
+
+.news-article {
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e3e3;
+}
+
+.article-category {
+  display: inline-block;
+
+  margin-bottom: 12px;
+
+  color: #b30000;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.article-title {
+  margin: 0 0 15px;
+
+  color: #222222;
+
+  font-size: 34px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.article-description {
+  margin: 0 0 18px;
+
+  color: #666666;
+
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+
+/* ========================================
+   Article Meta
+======================================== */
+
+.article-meta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 20px;
+
+  padding: 12px 0;
+
+  margin-bottom: 20px;
+
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+
+  color: #888888;
+
+  font-size: 12px;
+}
+
+
+/* ========================================
+   Article Image
+======================================== */
+
+.article-image {
+  width: 100%;
+
+  overflow: hidden;
+
+  margin-bottom: 25px;
+
+  background: #eeeeee;
+}
+
+.article-image img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-height: 550px;
+
+  object-fit: cover;
+}
+
+
+/* ========================================
+   Article Content
+======================================== */
+
+.article-content {
+  color: #333333;
+}
+
+.article-content p {
+  margin: 0 0 20px;
+
+  font-size: 16px;
+
+  line-height: 2;
+}
+
+
+/* ========================================
+   Share
+======================================== */
+
+.article-share {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding-top: 20px;
+
+  margin-top: 25px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+.share-title {
+  margin-right: 5px;
+
+  color: #555555;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.share-button {
+  padding: 8px 13px;
+
+  border: none;
+  border-radius: 4px;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.share-button.facebook {
+  background: #4267b2;
+}
+
+.share-button.whatsapp {
+  background: #25d366;
+}
+
+.share-button.copy {
+  background: #555555;
+}
+
+.share-button:hover {
+  opacity: 0.85;
+}
+
+
+/* ========================================
+   Sidebar
+======================================== */
+
+.news-sidebar {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e3e3;
+}
+
+.sidebar-title {
+  padding-bottom: 12px;
+
+  margin-bottom: 18px;
+
+  border-bottom: 2px solid #b30000;
+}
+
+.sidebar-title h2 {
+  margin: 0;
+
+  color: #222222;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   Related News
+======================================== */
+
+.related-news-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+.related-news-list .news-card-image-link {
+  height: 150px;
+}
+
+.related-news-list .news-card-content {
+  padding: 13px;
+}
+
+.related-news-list .news-card-title {
+  font-size: 16px;
+}
+
+.related-news-list .news-card-description {
+  font-size: 12px;
+}
+
+
+/* ========================================
+   All News Button
+======================================== */
+
+.all-news-button {
+  display: block;
+
+  margin-top: 20px;
+
+  padding: 11px 15px;
+
+  text-align: center;
+
+  border-radius: 4px;
+
+  background: #b30000;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.all-news-button:hover {
+  background: #8f0000;
+
+  color: #ffffff;
+}
+
+
+/* ========================================
+   Tablet
+======================================== */
+
+@media (max-width: 900px) {
+  .news-details-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .news-sidebar {
+    margin-top: 0;
+  }
+
+  .related-news-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 576px) {
+  .news-details-section {
+    padding: 25px 0 45px;
+  }
+
+  .news-article {
+    padding: 20px;
+  }
+
+  .article-title {
+    font-size: 25px;
+  }
+
+  .article-description {
+    font-size: 14px;
+  }
+
+  .article-content p {
+    font-size: 14px;
+
+    line-height: 1.8;
+  }
+
+  .article-meta {
+    flex-direction: column;
+
+    gap: 6px;
+  }
+
+  .article-share {
+    align-items: flex-start;
+  }
+
+  .news-sidebar {
+    padding: 15px;
+  }
+
+  .related-news-list {
+    grid-template-columns: 1fr;
+  }
+}

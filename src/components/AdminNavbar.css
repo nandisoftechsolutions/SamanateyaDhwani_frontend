@@ -1,0 +1,502 @@
+/* ======================================================
+   ADMIN NAVBAR
+====================================================== */
+
+.admin-navbar {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1000;
+}
+
+/* ======================================================
+   TOP BAR
+====================================================== */
+
+.admin-navbar-top {
+  min-height: 68px;
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+/* ======================================================
+   BRAND
+====================================================== */
+
+.admin-navbar-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  text-decoration: none;
+  color: #222222;
+
+  min-width: 210px;
+}
+
+.admin-brand-logo {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #b30000;
+  color: #ffffff;
+
+  border-radius: 8px;
+
+  font-size: 22px;
+  font-weight: 800;
+
+  box-shadow:
+    0 4px 10px rgba(
+      179,
+      0,
+      0,
+      0.22
+    );
+}
+
+.admin-brand-text {
+  display: flex;
+  flex-direction: column;
+
+  line-height: 1.1;
+}
+
+.admin-brand-text strong {
+  color: #222222;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.admin-brand-text span {
+  margin-top: 4px;
+
+  color: #999999;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+}
+
+/* ======================================================
+   RIGHT ACTIONS
+====================================================== */
+
+.admin-navbar-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.admin-view-site,
+.admin-logout-button {
+  min-height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.admin-view-site {
+  background: #f7f7f7;
+
+  border: 1px solid #e2e2e2;
+
+  color: #444444;
+}
+
+.admin-view-site:hover {
+  background: #eeeeee;
+  color: #222222;
+}
+
+.admin-logout-button {
+  background: #ffffff;
+
+  border: 1px solid #d8d8d8;
+
+  color: #b30000;
+}
+
+.admin-logout-button:hover {
+  background: #b30000;
+  border-color: #b30000;
+  color: #ffffff;
+}
+
+/* ======================================================
+   MOBILE BUTTON
+====================================================== */
+
+.admin-mobile-button {
+  display: none;
+
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+/* ======================================================
+   NAVIGATION BAR
+====================================================== */
+
+.admin-navbar-menu {
+  border-top: 1px solid #eeeeee;
+
+  background: #ffffff;
+}
+
+.admin-navbar-menu-inner {
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  min-height: 50px;
+}
+
+/* ======================================================
+   LABEL
+====================================================== */
+
+.admin-menu-label {
+  color: #aaaaaa;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.1px;
+
+  white-space: nowrap;
+}
+
+/* ======================================================
+   NAVIGATION
+====================================================== */
+
+.admin-navigation {
+  display: flex;
+  align-items: stretch;
+
+  gap: 2px;
+
+  height: 50px;
+}
+
+.admin-nav-link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 13px;
+
+  color: #555555;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.admin-nav-link:hover {
+  background: #fafafa;
+  color: #b30000;
+}
+
+.admin-nav-link.active {
+  background: #fff5f5;
+
+  color: #b30000;
+}
+
+.admin-nav-link.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+
+  height: 3px;
+
+  background: #b30000;
+
+  border-radius:
+    3px 3px 0 0;
+}
+
+.admin-nav-icon {
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+.admin-nav-name {
+  line-height: 1;
+}
+
+/* ======================================================
+   MOBILE ACTIONS
+====================================================== */
+
+.admin-mobile-actions {
+  display: none;
+}
+
+/* ======================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 1100px) {
+
+  .admin-navbar-top {
+    padding: 0 20px;
+  }
+
+  .admin-navbar-menu-inner {
+    padding: 0 20px;
+  }
+
+  .admin-menu-label {
+    display: none;
+  }
+
+  .admin-nav-link {
+    padding: 0 10px;
+
+    font-size: 11px;
+  }
+
+}
+
+/* ======================================================
+   SMALL TABLET
+====================================================== */
+
+@media (max-width: 900px) {
+
+  .admin-navbar-top {
+    min-height: 62px;
+  }
+
+  .admin-navbar-actions {
+    display: none;
+  }
+
+  .admin-mobile-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  .admin-navbar-menu {
+    display: none;
+  }
+
+  .admin-navbar-menu.show {
+    display: block;
+  }
+
+  .admin-navbar-menu-inner {
+    display: block;
+
+    padding: 10px 15px 15px;
+  }
+
+  .admin-navigation {
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 5px;
+  }
+
+  .admin-nav-link {
+    min-height: 44px;
+
+    padding: 0 12px;
+
+    border-radius: 5px;
+
+    border: 1px solid #eeeeee;
+
+    background: #ffffff;
+  }
+
+  .admin-nav-link.active {
+    background: #fff5f5;
+
+    border-color: #f0cccc;
+  }
+
+  .admin-nav-link.active::after {
+    display: none;
+  }
+
+  .admin-mobile-actions {
+    display: grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 7px;
+
+    margin-top: 10px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #eeeeee;
+  }
+
+  .admin-mobile-site-link,
+  .admin-mobile-logout {
+    min-height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+  }
+
+  .admin-mobile-site-link {
+    background: #f5f5f5;
+
+    border: 1px solid #dddddd;
+
+    color: #444444;
+  }
+
+  .admin-mobile-logout {
+    background: #b30000;
+
+    border: 1px solid #b30000;
+
+    color: #ffffff;
+  }
+
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 600px) {
+
+  .admin-navbar-top {
+    padding: 0 14px;
+
+    min-height: 58px;
+  }
+
+  .admin-brand-logo {
+    width: 38px;
+    height: 38px;
+
+    font-size: 19px;
+  }
+
+  .admin-brand-text strong {
+    font-size: 14px;
+  }
+
+  .admin-brand-text span {
+    font-size: 8px;
+  }
+
+  .admin-navbar-brand {
+    min-width: 0;
+  }
+
+  .admin-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-mobile-actions {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* ======================================================
+   VERY SMALL MOBILE
+====================================================== */
+
+@media (max-width: 360px) {
+
+  .admin-brand-text strong {
+    font-size: 13px;
+  }
+
+  .admin-brand-text span {
+    display: none;
+  }
+
+}

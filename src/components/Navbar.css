@@ -1,0 +1,321 @@
+/* ========================================
+   Navbar
+======================================== */
+
+.site-navbar {
+  width: 100%;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #dddddd;
+
+  position: relative;
+
+  z-index: 100;
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1200px;
+
+  min-height: 48px;
+
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+/* ========================================
+   Navigation Menu
+======================================== */
+
+.navbar-menu {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.navbar-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.navbar-link {
+  display: block;
+
+  padding: 15px 13px;
+
+  color: #444444;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  border-bottom: 3px solid transparent;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: #b30000;
+
+  background: #fafafa;
+}
+
+.navbar-link.active {
+  color: #b30000;
+
+  border-bottom-color: #b30000;
+
+  background: #fffafa;
+}
+
+
+/* ========================================
+   Search
+======================================== */
+
+.search-link {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #444444;
+
+  text-decoration: none;
+
+  font-size: 17px;
+
+  border-left: 1px solid #eeeeee;
+}
+
+.search-link:hover {
+  color: #b30000;
+}
+
+
+/* ========================================
+   Mobile Menu Button
+======================================== */
+
+.mobile-menu-button {
+  display: none;
+
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  font-size: 20px;
+}
+
+.mobile-menu-button:hover {
+  border-color: #b30000;
+
+  color: #b30000;
+}
+
+
+/* ========================================
+   Tablet
+======================================== */
+
+@media (max-width: 900px) {
+  .navbar-container {
+    padding: 0 15px;
+  }
+
+  .navbar-link {
+    padding: 14px 10px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 768px) {
+  .navbar-container {
+    min-height: 52px;
+
+    justify-content: space-between;
+
+    position: relative;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navbar-menu {
+    position: absolute;
+
+    top: 52px;
+    left: 0;
+    right: 0;
+
+    display: none;
+    flex-direction: column;
+
+    align-items: stretch;
+
+    max-height: calc(100vh - 52px);
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #dddddd;
+
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .navbar-menu.show {
+    display: flex;
+  }
+
+  .navbar-link {
+    width: 100%;
+
+    padding: 13px 18px;
+
+    border-bottom: 1px solid #eeeeee;
+    border-left: 3px solid transparent;
+
+    font-size: 14px;
+  }
+
+  .navbar-link.active {
+    border-bottom-color: #eeeeee;
+    border-left-color: #b30000;
+
+    background: #fffafa;
+  }
+
+  .search-link {
+    width: 40px;
+    height: 40px;
+
+    border-left: none;
+  }
+}
+.navbar-link-highlight {
+  font-weight: 700;
+}
+
+.navbar-link-highlight.active {
+  font-weight: 800;
+}
+
+.navbar-paper-icon {
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+/* =========================================================
+   STICKY NAVBAR
+   ========================================================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  width: 100%;
+
+  background: #e0dfdf;
+
+  transition:
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+
+/* =========================================================
+   WHEN USER SCROLLS
+   ========================================================= */
+
+.navbar.navbar-scrolled {
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   INNER CONTAINER
+   ========================================================= */
+
+.navbar-container {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 1500px;
+
+  min-height: 48px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SCROLLED NAVBAR
+   ========================================================= */
+
+.navbar-container-scrolled {
+  min-height: 46px;
+}
+
+
+/* =========================================================
+   IMPORTANT
+   ========================================================= */
+
+.navbar {
+  align-self: flex-start;
+}

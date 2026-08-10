@@ -1,0 +1,230 @@
+/* ========================================
+   Settings Page
+======================================== */
+
+.settings-page {
+  width: 100%;
+}
+
+
+/* ========================================
+   Layout
+======================================== */
+
+.settings-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(280px, 1fr);
+
+  gap: 20px;
+
+  align-items: start;
+}
+
+.settings-main {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.settings-sidebar {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+/* ========================================
+   Success Message
+======================================== */
+
+.settings-success {
+  margin-bottom: 20px;
+
+  padding: 12px 15px;
+
+  border: 1px solid #c8dfca;
+
+  border-radius: 4px;
+
+  background: #f0f8f1;
+
+  color: #287a38;
+
+  font-size: 13px;
+}
+
+
+/* ========================================
+   Logo Upload
+======================================== */
+
+.settings-logo-upload {
+  margin-bottom: 18px;
+}
+
+.settings-logo-upload input {
+  display: none;
+}
+
+.settings-logo-upload label {
+  display: block;
+
+  padding: 12px;
+
+  border: 1px dashed #cccccc;
+
+  border-radius: 4px;
+
+  background: #fafafa;
+
+  color: #666666;
+
+  text-align: center;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.settings-logo-upload label:hover {
+  border-color: #b30000;
+
+  background: #fffafa;
+
+  color: #b30000;
+}
+
+
+/* ========================================
+   Logo Preview
+======================================== */
+
+.settings-logo-preview {
+  width: 100%;
+
+  min-height: 160px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e3e3e3;
+
+  border-radius: 4px;
+
+  background: #f8f8f8;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+.settings-logo-preview img {
+  display: block;
+
+  max-width: 100%;
+
+  max-height: 160px;
+
+  object-fit: contain;
+}
+
+.settings-logo-placeholder {
+  width: 75px;
+  height: 75px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #b30000;
+
+  color: #ffffff;
+
+  font-size: 38px;
+
+  font-weight: 700;
+}
+
+
+/* ========================================
+   Logo Information
+======================================== */
+
+.settings-file-name {
+  margin: 10px 0 0;
+
+  color: #555555;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.settings-help-text {
+  margin: 10px 0 0;
+
+  color: #888888;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   Save Button
+======================================== */
+
+.settings-save-button {
+  width: 100%;
+
+  text-align: center;
+}
+
+
+/* ========================================
+   Tablet
+======================================== */
+
+@media (max-width: 850px) {
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-sidebar {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items: start;
+  }
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 600px) {
+  .settings-sidebar {
+    display: flex;
+
+    flex-direction: column;
+  }
+}

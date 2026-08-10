@@ -1,0 +1,423 @@
+/* =========================================================
+   BREAKING NEWS TICKER
+   ========================================================= */
+
+.breaking-news-section {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #111111;
+  border-bottom: 1px solid #2a2a2a;
+  overflow: hidden;
+}
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.breaking-news-container {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+/* =========================================================
+   BREAKING LABEL
+   ========================================================= */
+
+.breaking-label {
+  position: relative;
+  z-index: 3;
+
+  min-width: 150px;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: #b30000;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  box-shadow: 5px 0 12px rgba(0, 0, 0, 0.18);
+}
+
+/* Small slanted edge */
+
+.breaking-label::after {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  right: -12px;
+
+  width: 24px;
+  height: 100%;
+
+  background: #b30000;
+
+  transform: skewX(-18deg);
+  z-index: -1;
+}
+
+/* =========================================================
+   BREAKING ICON
+   ========================================================= */
+
+.breaking-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 8px;
+  height: 8px;
+
+  color: #ffffff;
+
+  font-size: 8px;
+
+  animation: breakingPulse 1s infinite;
+}
+
+/* =========================================================
+   TICKER AREA
+   ========================================================= */
+
+.breaking-news-list {
+  position: relative;
+
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+
+  background: #181818;
+}
+
+/* =========================================================
+   VIEWPORT
+   ========================================================= */
+
+.breaking-news-viewport {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================================
+   MOVING TRACK
+   ========================================================= */
+
+.breaking-news-track {
+  width: max-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  animation: breakingTicker 28s linear infinite;
+  will-change: transform;
+}
+
+/*
+  One item also scrolls horizontally.
+  The duplicated item makes the movement continuous.
+*/
+
+.breaking-news-track.single-news {
+  animation-duration: 18s;
+}
+
+.breaking-news-track.multiple-news {
+  animation-duration: 30s;
+}
+
+/* Pause when user points at ticker */
+
+.breaking-news-list:hover .breaking-news-track,
+.breaking-news-list:focus-within .breaking-news-track {
+  animation-play-state: paused;
+}
+
+/* =========================================================
+   NEWS ITEM
+   ========================================================= */
+
+.breaking-news-item {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin: 0;
+  padding: 0 28px;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 42px;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.breaking-news-item:hover {
+  color: #ffdddd;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.breaking-news-item:focus-visible {
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+/* =========================================================
+   NEWS DOT
+   ========================================================= */
+
+.breaking-news-dot {
+  flex: 0 0 auto;
+
+  width: 6px;
+  height: 6px;
+
+  color: #e00000;
+
+  font-size: 7px;
+
+  animation: breakingDotPulse 1.2s ease-in-out infinite;
+}
+
+/* =========================================================
+   NEWS TITLE
+   ========================================================= */
+
+.breaking-news-title {
+  display: inline-block;
+
+  max-width: 650px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.breaking-news-loading {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0 25px;
+
+  color: #dddddd;
+
+  font-size: 12px;
+  line-height: 42px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes breakingTicker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes breakingPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.35;
+    transform: scale(0.72);
+  }
+}
+
+@keyframes breakingDotPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .breaking-news-container {
+    min-height: 40px;
+  }
+
+  .breaking-label {
+    min-width: 125px;
+    padding: 0 13px;
+
+    font-size: 11px;
+  }
+
+  .breaking-news-item {
+    padding: 0 20px;
+
+    font-size: 12px;
+    line-height: 40px;
+  }
+
+  .breaking-news-title {
+    max-width: 500px;
+  }
+
+  .breaking-news-loading {
+    line-height: 40px;
+  }
+
+  .breaking-news-track {
+    animation-duration: 25s;
+  }
+
+  .breaking-news-track.single-news {
+    animation-duration: 16s;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .breaking-news-container {
+    min-height: 38px;
+  }
+
+  .breaking-label {
+    min-width: 105px;
+    padding: 0 10px;
+
+    gap: 6px;
+
+    font-size: 10px;
+    letter-spacing: 0.2px;
+  }
+
+  .breaking-label::after {
+    right: -9px;
+    width: 18px;
+  }
+
+  .breaking-news-item {
+    gap: 7px;
+
+    padding: 0 17px;
+
+    font-size: 11px;
+    line-height: 38px;
+  }
+
+  .breaking-news-title {
+    max-width: 360px;
+  }
+
+  .breaking-news-loading {
+    padding: 0 18px;
+
+    font-size: 11px;
+    line-height: 38px;
+  }
+
+  .breaking-news-track {
+    animation-duration: 22s;
+  }
+
+  .breaking-news-track.single-news {
+    animation-duration: 14s;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+  .breaking-label {
+    min-width: 92px;
+
+    font-size: 9px;
+  }
+
+  .breaking-news-item {
+    padding: 0 14px;
+
+    font-size: 10.5px;
+  }
+
+  .breaking-news-title {
+    max-width: 280px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .breaking-news-track {
+    animation: none;
+  }
+
+  .breaking-icon,
+  .breaking-news-dot {
+    animation: none;
+  }
+
+  .breaking-news-viewport {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+}

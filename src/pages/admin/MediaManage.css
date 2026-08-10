@@ -1,0 +1,167 @@
+/* ========================================
+   Media Manage
+======================================== */
+
+.media-manage-page {
+  width: 100%;
+}
+
+
+/* ========================================
+   Filter
+======================================== */
+
+.media-filter {
+  display: flex;
+
+  gap: 8px;
+
+  margin-bottom: 20px;
+}
+
+.media-filter-button {
+  padding: 8px 15px;
+
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  color: #555555;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.media-filter-button:hover {
+  border-color: #b30000;
+
+  color: #b30000;
+}
+
+.media-filter-button.active {
+  border-color: #b30000;
+
+  background: #b30000;
+
+  color: #ffffff;
+}
+
+
+/* ========================================
+   Media Card
+======================================== */
+
+.media-table-card {
+  background: #ffffff;
+
+  border: 1px solid #e3e3e3;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ========================================
+   Preview
+======================================== */
+
+.media-preview {
+  display: block;
+
+  width: 80px;
+  height: 55px;
+
+  object-fit: cover;
+
+  border-radius: 4px;
+
+  background: #eeeeee;
+}
+
+.media-video-preview {
+  width: 80px;
+  height: 55px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 4px;
+
+  background: #333333;
+
+  color: #ffffff;
+
+  font-size: 18px;
+}
+
+
+/* ========================================
+   Media Type
+======================================== */
+
+.media-type {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 12px;
+
+  background: #f3f3f3;
+
+  color: #555555;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+
+/* ========================================
+   Form Select
+======================================== */
+
+.admin-form-group select {
+  width: 100%;
+
+  height: 42px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  font-size: 13px;
+
+  box-sizing: border-box;
+}
+
+.admin-form-group select:focus {
+  border-color: #b30000;
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 600px) {
+  .media-filter {
+    overflow-x: auto;
+
+    padding-bottom: 3px;
+  }
+
+  .media-filter-button {
+    flex-shrink: 0;
+  }
+}

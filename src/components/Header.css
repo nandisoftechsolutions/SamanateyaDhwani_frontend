@@ -1,0 +1,1292 @@
+/* =========================================================
+   SAMANATEYA DHWANI
+   HEADER.CSS
+   ========================================================= */
+
+
+/* =========================================================
+   MAIN SITE HEADER
+   ========================================================= */
+
+.site-header {
+  width: 100%;
+
+  position: relative;
+
+  z-index: 1000;
+
+  background: #ffffff;
+
+  color: #222222;
+
+  border-bottom: 1px solid #dddddd;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TOP HEADER CONTAINER
+   ========================================================= */
+
+.header-container {
+  width: 100%;
+
+  max-width: 1500px;
+
+  min-height: 122px;
+
+  margin: 0 auto;
+
+  padding: 16px 42px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  gap: 30px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.header-left {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   RECTANGULAR LOGO
+   ========================================================= */
+
+.header-logo-link {
+  width: 125px;
+
+  height: 72px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  text-decoration: none;
+
+  background: #ffffff;
+
+  border: 1px solid #d7d7d7;
+
+  border-radius: 6px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LOGO HOVER
+   ========================================================= */
+
+.header-logo-link:hover {
+  transform: translateY(-2px);
+
+  border-color: #b30000;
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.13);
+}
+
+
+/* =========================================================
+   LOGO IMAGE
+   ========================================================= */
+
+.header-logo-image {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+
+  padding: 5px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FALLBACK LOGO
+   ========================================================= */
+
+.header-logo-fallback {
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #b30000;
+
+  color: #ffffff;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Tunga",
+    "Nirmala UI",
+    sans-serif;
+
+  font-size: 38px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TODAY'S NEWS
+   ========================================================= */
+
+.header-date {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 7px 12px;
+
+  color: #666666;
+
+  background: #fafafa;
+
+  border-left: 3px solid #b30000;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Nirmala UI",
+    sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  line-height: 1.3;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CENTER BRAND CONTAINER
+   ========================================================= */
+
+.header-brand {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   BRAND LINK
+   ========================================================= */
+
+.header-brand-link {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-decoration: none;
+
+  color: inherit;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   BRAND NAME
+   ========================================================= */
+
+.brand-name {
+  display: block;
+
+  margin: 0;
+
+  color: #b30000;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Tunga",
+    "Nirmala UI",
+    sans-serif;
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+  line-height: 1.15;
+
+  letter-spacing: 0;
+
+  white-space: nowrap;
+
+  text-align: center;
+
+  transition:
+    color 0.2s ease;
+}
+
+
+/* =========================================================
+   BRAND TAGLINE / SUB HEADING
+   ========================================================= */
+
+.brand-tagline {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #555555;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  letter-spacing: 0.25px;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  opacity: 0.95;
+}
+
+
+/* =========================================================
+   BRAND HOVER
+   ========================================================= */
+
+.header-brand-link:hover .brand-name {
+  color: #8f0000;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.header-right {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   SOCIAL MEDIA CONTAINER
+   ========================================================= */
+
+.header-socials {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 7px;
+
+  flex-wrap: nowrap;
+}
+
+
+/* =========================================================
+   SOCIAL MEDIA BUTTON
+   ========================================================= */
+
+.header-social-link {
+  width: 36px;
+
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #555555;
+
+  background: #ffffff;
+
+  border: 1px solid #d8d8d8;
+
+  border-radius: 50%;
+
+  text-decoration: none;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   SOCIAL SVG
+   ========================================================= */
+
+.header-social-link svg {
+  width: 17px;
+
+  height: 17px;
+
+  display: block;
+}
+
+
+/* =========================================================
+   SOCIAL HOVER
+   ========================================================= */
+
+.header-social-link:hover {
+  transform: translateY(-2px);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================================
+   YOUTUBE
+   ========================================================= */
+
+.social-youtube:hover {
+  background: #ff0000;
+
+  border-color: #ff0000;
+}
+
+
+/* =========================================================
+   FACEBOOK
+   ========================================================= */
+
+.social-facebook:hover {
+  background: #1877f2;
+
+  border-color: #1877f2;
+}
+
+
+/* =========================================================
+   INSTAGRAM
+   ========================================================= */
+
+.social-instagram:hover {
+  background: #c13584;
+
+  border-color: #c13584;
+}
+
+
+/* =========================================================
+   X
+   ========================================================= */
+
+.social-x:hover {
+  background: #000000;
+
+  border-color: #000000;
+}
+
+
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+
+.social-whatsapp:hover {
+  background: #25d366;
+
+  border-color: #25d366;
+}
+
+
+/* =========================================================
+   TELEGRAM
+   ========================================================= */
+
+.social-telegram:hover {
+  background: #229ed9;
+
+  border-color: #229ed9;
+}
+
+
+/* =========================================================
+   LANGUAGE SWITCHER
+   ========================================================= */
+
+.language-switcher {
+  min-height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0 7px;
+
+  background: #ffffff;
+
+  border: 1px solid #d8d8d8;
+
+  border-radius: 5px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LANGUAGE BUTTON
+   ========================================================= */
+
+.language-button {
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #666666;
+
+  padding: 7px 7px;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* =========================================================
+   LANGUAGE HOVER
+   ========================================================= */
+
+.language-button:hover {
+  color: #b30000;
+}
+
+
+/* =========================================================
+   ACTIVE LANGUAGE
+   ========================================================= */
+
+.language-button.active {
+  color: #b30000;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LANGUAGE DIVIDER
+   ========================================================= */
+
+.language-divider {
+  color: #cccccc;
+
+  font-size: 12px;
+
+  user-select: none;
+}
+
+
+/* =========================================================
+   NAVIGATION BAR
+   ========================================================= */
+
+.header-bottom {
+  width: 100%;
+
+  background: #b30000;
+
+  border-top: 1px solid #a00000;
+
+  border-bottom: 1px solid #8f0000;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   NAVIGATION INNER
+   ========================================================= */
+
+.header-bottom-inner {
+  width: 100%;
+
+  max-width: 1500px;
+
+  min-height: 48px;
+
+  margin: 0 auto;
+
+  padding: 0 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 0;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   NAVIGATION LINK
+   ========================================================= */
+
+.header-nav-link {
+  position: relative;
+
+  min-height: 48px;
+
+  padding: 0 20px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  border-left: 1px solid
+    rgba(255, 255, 255, 0.12);
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* =========================================================
+   LAST NAVIGATION LINK
+   ========================================================= */
+
+.header-nav-link:last-child {
+  border-right: 1px solid
+    rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   NAVIGATION HOVER
+   ========================================================= */
+
+.header-nav-link:hover {
+  color: #ffffff;
+
+  background:
+    rgba(0, 0, 0, 0.14);
+}
+
+
+/* =========================================================
+   ACTIVE NAVIGATION
+   ========================================================= */
+
+.header-nav-link.active {
+  color: #ffffff;
+
+  background:
+    rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================================================
+   ACTIVE NAVIGATION LINE
+   ========================================================= */
+
+.header-nav-link.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 15px;
+
+  right: 15px;
+
+  bottom: 0;
+
+  height: 3px;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+  .header-container {
+    min-height: 126px;
+
+    padding-left: 55px;
+
+    padding-right: 55px;
+
+    gap: 40px;
+  }
+
+  .header-logo-link {
+    width: 135px;
+
+    height: 76px;
+  }
+
+  .brand-name {
+    font-size: 44px;
+  }
+
+  .brand-tagline {
+    font-size: 14px;
+
+    margin-top: 6px;
+  }
+
+  .header-social-link {
+    width: 38px;
+
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+  .header-bottom-inner {
+    padding-left: 40px;
+
+    padding-right: 40px;
+  }
+
+  .header-nav-link {
+    padding-left: 23px;
+
+    padding-right: 23px;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .header-container {
+    min-height: 108px;
+
+    padding:
+      14px 28px;
+
+    gap: 22px;
+  }
+
+  .header-logo-link {
+    width: 110px;
+
+    height: 64px;
+  }
+
+  .brand-name {
+    font-size: 36px;
+  }
+
+  .brand-tagline {
+    font-size: 12px;
+
+    margin-top: 4px;
+  }
+
+  .header-left {
+    gap: 11px;
+  }
+
+  .header-date {
+    font-size: 11px;
+
+    padding:
+      6px 9px;
+  }
+
+  .header-right {
+    gap: 10px;
+  }
+
+  .header-socials {
+    gap: 5px;
+  }
+
+  .header-social-link {
+    width: 33px;
+
+    height: 33px;
+
+    flex-basis: 33px;
+  }
+
+  .header-social-link svg {
+    width: 15px;
+
+    height: 15px;
+  }
+
+  .language-switcher {
+    min-height: 33px;
+  }
+
+  .language-button {
+    padding:
+      6px 5px;
+
+    font-size: 10px;
+  }
+
+  .header-bottom-inner {
+    padding:
+      0 20px;
+  }
+
+  .header-nav-link {
+    padding:
+      0 15px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+  .header-container {
+    min-height: 100px;
+
+    grid-template-columns:
+      1fr
+      auto
+      1fr;
+
+    padding:
+      12px 18px;
+
+    gap: 15px;
+  }
+
+  .header-logo-link {
+    width: 92px;
+
+    height: 56px;
+  }
+
+  .header-left {
+    gap: 9px;
+  }
+
+  .header-date {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 30px;
+  }
+
+  .brand-tagline {
+    font-size: 11px;
+
+    margin-top: 3px;
+  }
+
+  .header-right {
+    gap: 7px;
+  }
+
+  .header-socials {
+    gap: 4px;
+  }
+
+  .header-social-link {
+    width: 30px;
+
+    height: 30px;
+
+    flex-basis: 30px;
+  }
+
+  .header-social-link svg {
+    width: 14px;
+
+    height: 14px;
+  }
+
+  .language-switcher {
+    min-height: 30px;
+
+    padding:
+      0 4px;
+  }
+
+  .language-button {
+    padding:
+      5px 4px;
+
+    font-size: 9px;
+  }
+
+  .header-bottom-inner {
+    min-height: 44px;
+
+    padding:
+      0 10px;
+  }
+
+  .header-nav-link {
+    min-height: 44px;
+
+    padding:
+      0 11px;
+
+    font-size: 11px;
+  }
+
+  .header-nav-link.active::after {
+    left: 9px;
+
+    right: 9px;
+  }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+  .header-container {
+    min-height: 88px;
+
+    padding:
+      10px 14px;
+
+    grid-template-columns:
+      80px
+      1fr
+      auto;
+
+    gap: 10px;
+  }
+
+  .header-logo-link {
+    width: 76px;
+
+    height: 48px;
+  }
+
+  .brand-name {
+    font-size: 25px;
+  }
+
+  .brand-tagline {
+    font-size: 10px;
+
+    margin-top: 3px;
+  }
+
+  .header-socials {
+    display: none;
+  }
+
+  .header-right {
+    justify-content: flex-end;
+  }
+
+  .language-switcher {
+    min-height: 31px;
+  }
+
+  .language-button {
+    font-size: 10px;
+
+    padding:
+      6px 5px;
+  }
+
+  .header-bottom {
+    overflow-x: auto;
+
+    scrollbar-width: none;
+  }
+
+  .header-bottom::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header-bottom-inner {
+    width: max-content;
+
+    min-width: 100%;
+
+    justify-content: flex-start;
+
+    padding:
+      0 5px;
+  }
+
+  .header-nav-link {
+    padding:
+      0 13px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+  .header-container {
+    min-height: 78px;
+
+    padding:
+      8px 10px;
+
+    grid-template-columns:
+      62px
+      1fr
+      auto;
+
+    gap: 7px;
+  }
+
+  .header-logo-link {
+    width: 60px;
+
+    height: 42px;
+
+    border-radius: 5px;
+  }
+
+  .header-logo-image {
+    padding: 3px;
+  }
+
+  .header-logo-fallback {
+    font-size: 25px;
+  }
+
+  .brand-name {
+    font-size: 21px;
+
+    line-height: 1.15;
+
+    white-space: normal;
+  }
+
+  .brand-tagline {
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    line-height: 1.25;
+
+    white-space: normal;
+
+    max-width: 220px;
+  }
+
+  .language-switcher {
+    min-height: 29px;
+
+    padding:
+      0 2px;
+  }
+
+  .language-button {
+    padding:
+      5px 3px;
+
+    font-size: 9px;
+  }
+
+  .language-divider {
+    font-size: 10px;
+  }
+
+  .header-bottom-inner {
+    min-height: 42px;
+  }
+
+  .header-nav-link {
+    min-height: 42px;
+
+    padding:
+      0 11px;
+
+    font-size: 10px;
+  }
+
+  .header-nav-link.active::after {
+    height: 2px;
+
+    left: 7px;
+
+    right: 7px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .header-container {
+    min-height: 72px;
+
+    padding:
+      7px 8px;
+
+    grid-template-columns:
+      54px
+      1fr
+      auto;
+
+    gap: 6px;
+  }
+
+  .header-logo-link {
+    width: 52px;
+
+    height: 38px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+  }
+
+  .brand-tagline {
+    font-size: 8px;
+
+    max-width: 185px;
+  }
+
+  .language-button {
+    font-size: 8px;
+
+    padding:
+      4px 3px;
+  }
+
+  .header-nav-link {
+    padding:
+      0 9px;
+
+    font-size: 9px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 330px) {
+
+  .header-container {
+    min-height: 68px;
+
+    grid-template-columns:
+      47px
+      1fr
+      auto;
+
+    padding:
+      6px 6px;
+  }
+
+  .header-logo-link {
+    width: 45px;
+
+    height: 34px;
+  }
+
+  .brand-name {
+    font-size: 16px;
+  }
+
+  .brand-tagline {
+    font-size: 7px;
+
+    max-width: 160px;
+  }
+
+  .language-button {
+    font-size: 7px;
+  }
+
+  .header-nav-link {
+    padding:
+      0 8px;
+
+    font-size: 8px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.header-logo-link:focus-visible,
+.header-brand-link:focus-visible,
+.header-social-link:focus-visible,
+.language-button:focus-visible,
+.header-nav-link:focus-visible {
+  outline: 2px solid #b30000;
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .header-logo-link,
+  .header-brand-link,
+  .header-social-link,
+  .language-button,
+  .header-nav-link,
+  .brand-name {
+    transition: none;
+  }
+}

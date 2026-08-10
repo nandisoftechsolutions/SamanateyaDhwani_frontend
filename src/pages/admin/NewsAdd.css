@@ -1,0 +1,1325 @@
+/* =========================================================
+   NEWS ADD PAGE
+   SAMANATEYA DHWANI ADMIN PANEL
+   ========================================================= */
+
+.news-add-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 24px;
+
+  background: #f5f6f8;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.news-add-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+.news-add-header h1 {
+  margin: 0 0 5px;
+
+  color: #222222;
+
+  font-size: 27px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.news-add-header p {
+  margin: 0;
+
+  color: #777777;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.news-back-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 9px 15px;
+
+  color: #555555;
+
+  background: #ffffff;
+
+  border: 1px solid #dddddd;
+
+  border-radius: 5px;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.news-back-button:hover {
+  color: #b30000;
+
+  background: #fffafa;
+
+  border-color: #b30000;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MAIN FORM
+   ========================================================= */
+
+.news-add-form {
+  width: 100%;
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 0;
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.news-form-card {
+  margin-bottom: 20px;
+
+  padding: 25px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e1e1;
+
+  border-radius: 7px;
+
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.045);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FORM CARD HEADER
+   ========================================================= */
+
+.news-form-card-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 22px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.news-form-card-header h2 {
+  margin: 0 0 4px;
+
+  color: #222222;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+.news-form-card-header p {
+  margin: 0;
+
+  color: #888888;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   LANGUAGE INFORMATION BANNER
+   ========================================================= */
+
+.news-language-banner {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  margin-bottom: 20px;
+
+  padding: 13px 15px;
+
+  background: #fff8e8;
+
+  border: 1px solid #efd99a;
+
+  border-left: 4px solid #d79a00;
+
+  border-radius: 5px;
+
+  box-sizing: border-box;
+}
+
+.news-language-banner strong {
+  color: #765300;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.news-language-banner span {
+  color: #806d48;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.admin-form-group {
+  margin-bottom: 19px;
+}
+
+.admin-form-group:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.admin-form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #333333;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   REQUIRED MARK
+   ========================================================= */
+
+.admin-form-group label .required {
+  color: #b30000;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.admin-form-group input[type="text"],
+.admin-form-group input[type="url"],
+.admin-form-group input[type="number"],
+.admin-form-group input[type="email"],
+.admin-form-group input[type="date"],
+.admin-form-group input[type="tel"],
+.admin-form-group select,
+.admin-form-group textarea {
+  width: 100%;
+
+  padding: 11px 12px;
+
+  color: #222222;
+
+  background: #ffffff;
+
+  border: 1px solid #d8d8d8;
+
+  border-radius: 5px;
+
+  outline: none;
+
+  font-family:
+    "Noto Sans Kannada",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* =========================================================
+   TEXT INPUT HEIGHT
+   ========================================================= */
+
+.admin-form-group input[type="text"],
+.admin-form-group input[type="url"],
+.admin-form-group input[type="number"],
+.admin-form-group input[type="email"],
+.admin-form-group input[type="date"],
+.admin-form-group input[type="tel"],
+.admin-form-group select {
+  min-height: 43px;
+}
+
+
+/* =========================================================
+   TEXTAREA
+   ========================================================= */
+
+.admin-form-group textarea {
+  min-height: 110px;
+
+  resize: vertical;
+}
+
+
+/* =========================================================
+   FULL CONTENT TEXTAREA
+   ========================================================= */
+
+.admin-form-group textarea[name="content"] {
+  min-height: 320px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  border-color: #b30000;
+
+  box-shadow:
+    0 0 0 3px rgba(179, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
+
+.admin-form-group input:disabled,
+.admin-form-group select:disabled,
+.admin-form-group textarea:disabled {
+  cursor: not-allowed;
+
+  color: #888888;
+
+  background: #f6f6f6;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.admin-form-group input::placeholder,
+.admin-form-group textarea::placeholder {
+  color: #aaaaaa;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   HELP TEXT
+   ========================================================= */
+
+.news-language-help,
+.location-help {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #888888;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORM ROW
+   ========================================================= */
+
+.news-form-row {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   THREE COLUMN ROW
+   ========================================================= */
+
+.news-form-row.three-columns {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+}
+
+
+/* =========================================================
+   CATEGORY SELECT
+   ========================================================= */
+
+.admin-form-group select {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+
+/* =========================================================
+   BREAKING NEWS OPTION
+   ========================================================= */
+
+.news-breaking-option {
+  margin-top: 20px;
+
+  padding: 16px 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7f7,
+      #ffffff
+    );
+
+  border: 1px solid #efcaca;
+
+  border-left: 4px solid #c00000;
+
+  border-radius: 6px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BREAKING CHECKBOX LABEL
+   ========================================================= */
+
+.news-breaking-option > label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 0;
+
+  cursor: pointer;
+
+  color: #a00000;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  user-select: none;
+}
+
+
+/* =========================================================
+   BREAKING CHECKBOX
+   ========================================================= */
+
+.news-breaking-option input[type="checkbox"] {
+  width: 18px;
+
+  height: 18px;
+
+  flex: 0 0 18px;
+
+  margin: 0;
+
+  accent-color: #b30000;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   BREAKING HELP
+   ========================================================= */
+
+.news-breaking-option .location-help {
+  margin: 7px 0 0 28px;
+
+  color: #777777;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   BREAKING ACTIVE STATE
+   ========================================================= */
+
+.news-breaking-option:has(
+  input[type="checkbox"]:checked
+) {
+  background:
+    linear-gradient(
+      135deg,
+      #fff0f0,
+      #ffffff
+    );
+
+  border-color: #e2aaaa;
+
+  box-shadow:
+    0 4px 12px rgba(179, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD SECTION
+   ========================================================= */
+
+.news-image-upload {
+  padding: 18px;
+
+  background: #fafafa;
+
+  border: 1px dashed #cccccc;
+
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
+
+.admin-form-group input[type="file"] {
+  width: 100%;
+
+  padding: 10px;
+
+  color: #555555;
+
+  background: #ffffff;
+
+  border: 1px solid #d8d8d8;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FILE INPUT FOCUS
+   ========================================================= */
+
+.admin-form-group input[type="file"]:focus {
+  outline: none;
+
+  border-color: #b30000;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+   ========================================================= */
+
+.news-image-preview {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 420px;
+
+  margin-top: 14px;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+
+  border: 1px solid #dddddd;
+
+  border-radius: 6px;
+}
+
+.news-image-preview img {
+  width: 100%;
+
+  height: auto;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   PLAY BUTTON LINK SECTION
+   ========================================================= */
+
+.news-play-link-section {
+  padding: 18px;
+
+  background: #f9fbff;
+
+  border: 1px solid #dce6f4;
+
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   PLAY LINK INPUT
+   ========================================================= */
+
+.news-play-link-section input {
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SOCIAL MEDIA SECTION
+   ========================================================= */
+
+.news-social-section {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+
+/* =========================================================
+   SOCIAL FIELD
+   ========================================================= */
+
+.news-social-field {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+.news-social-field-icon {
+  width: 36px;
+
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #f5f5f5;
+
+  border: 1px solid #dddddd;
+
+  border-radius: 50%;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   PUBLISH SETTINGS
+   ========================================================= */
+
+.news-publish-settings {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+   ========================================================= */
+
+.news-status-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  color: #8a6100;
+
+  background: #fff4d9;
+
+  border: 1px solid #f0d797;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FEATURED OPTION
+   ========================================================= */
+
+.news-featured-option {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 13px 15px;
+
+  background: #fafafa;
+
+  border: 1px solid #e2e2e2;
+
+  border-radius: 5px;
+}
+
+.news-featured-option label {
+  margin: 0;
+
+  cursor: pointer;
+
+  color: #444444;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.news-featured-option input {
+  width: 17px;
+
+  height: 17px;
+
+  accent-color: #b30000;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.news-error {
+  margin-bottom: 18px;
+
+  padding: 12px 15px;
+
+  color: #a00000;
+
+  background: #fff0f0;
+
+  border: 1px solid #e2b5b5;
+
+  border-left: 4px solid #b30000;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.news-success,
+.news-message {
+  margin-bottom: 18px;
+
+  padding: 12px 15px;
+
+  color: #28752d;
+
+  background: #f0f8f0;
+
+  border: 1px solid #c8dfca;
+
+  border-left: 4px solid #2e7d32;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.news-form-actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+   ========================================================= */
+
+.news-cancel-button {
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  color: #555555;
+
+  background: #ffffff;
+
+  border: 1px solid #d7d7d7;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.news-cancel-button:hover {
+  color: #333333;
+
+  background: #f7f7f7;
+
+  border-color: #bbbbbb;
+}
+
+
+/* =========================================================
+   SAVE DRAFT BUTTON
+   ========================================================= */
+
+.news-draft-button {
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  color: #555555;
+
+  background: #f5f5f5;
+
+  border: 1px solid #d3d3d3;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.news-draft-button:hover {
+  color: #333333;
+
+  background: #eaeaea;
+
+  border-color: #bdbdbd;
+}
+
+
+/* =========================================================
+   PUBLISH BUTTON
+   ========================================================= */
+
+.news-publish-button {
+  min-height: 42px;
+
+  padding: 0 22px;
+
+  color: #ffffff;
+
+  background: #b30000;
+
+  border: 1px solid #b30000;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 8px rgba(179, 0, 0, 0.18);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.news-publish-button:hover {
+  background: #8f0000;
+
+  border-color: #8f0000;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 12px rgba(179, 0, 0, 0.23);
+}
+
+
+/* =========================================================
+   DISABLED BUTTONS
+   ========================================================= */
+
+.news-cancel-button:disabled,
+.news-draft-button:disabled,
+.news-publish-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.news-loading {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.news-loading-spinner {
+  width: 13px;
+
+  height: 13px;
+
+  border: 2px solid
+    rgba(255, 255, 255, 0.4);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation:
+    newsSpinner 0.7s linear infinite;
+}
+
+@keyframes newsSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   LOCATION SECTION
+   ========================================================= */
+
+.news-location-section {
+  padding: 18px;
+
+  background: #fafafa;
+
+  border: 1px solid #e3e3e3;
+
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   LOCATION GRID
+   ========================================================= */
+
+.news-location-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+
+/* =========================================================
+   MAP / LOCATION NOTE
+   ========================================================= */
+
+.news-location-note {
+  margin-top: 8px;
+
+  padding: 10px 12px;
+
+  color: #666666;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e5e5;
+
+  border-radius: 4px;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   LINK PREVIEW
+   ========================================================= */
+
+.news-link-preview {
+  margin-top: 10px;
+
+  padding: 10px 12px;
+
+  background: #f7faff;
+
+  border: 1px solid #dce7f5;
+
+  border-radius: 5px;
+
+  color: #38658f;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   CHECKBOX COMMON
+   ========================================================= */
+
+.admin-checkbox {
+  width: 17px;
+
+  height: 17px;
+
+  accent-color: #b30000;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1000PX
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .news-add-page {
+    padding: 20px;
+  }
+
+  .news-form-card {
+    padding: 21px;
+  }
+
+  .news-form-row.three-columns {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 768PX
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .news-add-page {
+    padding: 15px;
+  }
+
+  .news-add-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .news-add-header h1 {
+    font-size: 23px;
+  }
+
+  .news-add-header p {
+    font-size: 12px;
+  }
+
+  .news-back-button {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .news-form-card {
+    padding: 18px;
+
+    border-radius: 6px;
+  }
+
+  .news-form-card-header {
+    flex-direction: column;
+  }
+
+  .news-form-row,
+  .news-form-row.three-columns,
+  .news-social-section,
+  .news-publish-settings,
+  .news-location-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-breaking-option .location-help {
+    margin-left: 0;
+  }
+
+  .news-form-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .news-cancel-button,
+  .news-draft-button,
+  .news-publish-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 520PX
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+  .news-add-page {
+    padding: 10px;
+  }
+
+  .news-form-card {
+    padding: 15px;
+  }
+
+  .news-add-header h1 {
+    font-size: 21px;
+  }
+
+  .news-form-card-header h2 {
+    font-size: 16px;
+  }
+
+  .admin-form-group label {
+    font-size: 12px;
+  }
+
+  .admin-form-group input[type="text"],
+  .admin-form-group input[type="url"],
+  .admin-form-group input[type="number"],
+  .admin-form-group input[type="email"],
+  .admin-form-group input[type="date"],
+  .admin-form-group input[type="tel"],
+  .admin-form-group select,
+  .admin-form-group textarea {
+    font-size: 12px;
+
+    padding:
+      10px 11px;
+  }
+
+  .admin-form-group textarea[name="content"] {
+    min-height: 260px;
+  }
+
+  .news-language-banner {
+    padding: 11px 12px;
+  }
+
+  .news-breaking-option {
+    padding: 13px;
+  }
+
+  .news-breaking-option > label {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   KANNADA FONT SUPPORT
+   ========================================================= */
+
+.news-add-page,
+.news-add-page input,
+.news-add-page textarea,
+.news-add-page select,
+.news-add-page button {
+  font-family:
+    "Noto Sans Kannada",
+    "Nirmala UI",
+    "Tunga",
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.news-add-page
+button:focus-visible,
+.news-add-page
+input:focus-visible,
+.news-add-page
+textarea:focus-visible,
+.news-add-page
+select:focus-visible,
+.news-add-page
+a:focus-visible {
+  outline: 2px solid #b30000;
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .news-add-page *,
+  .news-add-page *::before,
+  .news-add-page *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+    scroll-behavior: auto !important;
+  }
+}

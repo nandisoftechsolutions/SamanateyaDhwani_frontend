@@ -1,0 +1,235 @@
+/* ========================================
+   Search Page
+======================================== */
+
+.search-page {
+  min-height: 70vh;
+
+  background: #ffffff;
+}
+
+
+/* ========================================
+   Search Section
+======================================== */
+
+.search-section {
+  padding: 25px 0;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.search-form {
+  display: flex;
+
+  max-width: 750px;
+
+  margin: 0 auto;
+}
+
+.search-form input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 46px;
+
+  padding: 0 15px;
+
+  border: 1px solid #dddddd;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+
+  outline: none;
+
+  color: #333333;
+
+  background: #ffffff;
+
+  font-size: 14px;
+
+  box-sizing: border-box;
+}
+
+.search-form input:focus {
+  border-color: #b30000;
+}
+
+.search-form button {
+  width: 100px;
+
+  height: 46px;
+
+  border: none;
+  border-radius: 0 4px 4px 0;
+
+  background: #b30000;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background: #8f0000;
+}
+
+
+/* ========================================
+   Results
+======================================== */
+
+.search-results-section {
+  padding: 35px 0 60px;
+
+  background: #f7f7f7;
+}
+
+.search-result-heading {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 25px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid #dddddd;
+}
+
+.search-result-heading h2 {
+  margin: 0;
+
+  color: #222222;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.search-result-heading span {
+  flex-shrink: 0;
+
+  color: #777777;
+
+  font-size: 12px;
+}
+
+
+/* ========================================
+   Search Grid
+======================================== */
+
+.search-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+/* ========================================
+   Empty State
+======================================== */
+
+.search-empty {
+  max-width: 650px;
+
+  margin: 20px auto;
+
+  padding: 60px 25px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e3e3;
+}
+
+.search-empty h3 {
+  margin: 0 0 10px;
+
+  color: #333333;
+
+  font-size: 20px;
+}
+
+.search-empty p {
+  margin: 0;
+
+  color: #777777;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* ========================================
+   Tablet
+======================================== */
+
+@media (max-width: 992px) {
+  .search-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 576px) {
+  .search-section {
+    padding: 20px 0;
+  }
+
+  .search-form input {
+    height: 42px;
+
+    font-size: 13px;
+  }
+
+  .search-form button {
+    width: 80px;
+
+    height: 42px;
+
+    font-size: 12px;
+  }
+
+  .search-results-section {
+    padding: 25px 0 45px;
+  }
+
+  .search-result-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .search-result-heading h2 {
+    font-size: 18px;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .search-empty {
+    padding: 45px 20px;
+  }
+}

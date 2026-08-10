@@ -1,0 +1,163 @@
+/* ========================================
+   News Page
+======================================== */
+
+.news-page {
+  min-height: 70vh;
+}
+
+
+/* ========================================
+   Category Filter
+======================================== */
+
+.news-filter-section {
+  padding: 20px 0;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.news-filters {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  overflow-x: auto;
+
+  padding-bottom: 3px;
+
+  scrollbar-width: none;
+}
+
+.news-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.news-filter {
+  flex-shrink: 0;
+
+  padding: 8px 15px;
+
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  color: #555555;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.news-filter:hover {
+  border-color: #b30000;
+
+  color: #b30000;
+}
+
+.news-filter.active {
+  border-color: #b30000;
+
+  background: #b30000;
+
+  color: #ffffff;
+}
+
+
+/* ========================================
+   News List
+======================================== */
+
+.news-list-section {
+  padding: 40px 0 60px;
+
+  background: #f7f7f7;
+}
+
+.news-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+/* ========================================
+   No News
+======================================== */
+
+.no-news {
+  padding: 70px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e3e3;
+}
+
+.no-news h3 {
+  margin: 0 0 10px;
+
+  color: #333333;
+
+  font-size: 20px;
+}
+
+.no-news p {
+  margin: 0;
+
+  color: #777777;
+
+  font-size: 13px;
+}
+
+
+/* ========================================
+   Tablet
+======================================== */
+
+@media (max-width: 992px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 576px) {
+  .news-list-section {
+    padding: 30px 0 45px;
+  }
+
+  .news-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .news-filter-section {
+    padding: 15px 0;
+  }
+
+  .news-filter {
+    padding: 7px 12px;
+
+    font-size: 11px;
+  }
+}

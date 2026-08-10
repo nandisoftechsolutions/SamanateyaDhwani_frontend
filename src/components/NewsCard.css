@@ -1,0 +1,444 @@
+/* =========================================================
+   NEWS CARD
+   ========================================================= */
+
+.news-card {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e5e5;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.news-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #d5d5d5;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.09);
+}
+
+
+/* =========================================================
+   IMAGE LINK
+   ========================================================= */
+
+.news-card-image-link {
+  display: block;
+
+  width: 100%;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+}
+
+
+/* =========================================================
+   IMAGE WRAPPER
+   EXACT 16 : 9 RATIO
+   ========================================================= */
+
+.news-card-image-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+}
+
+
+/* =========================================================
+   NEWS IMAGE
+   ========================================================= */
+
+.news-card-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transition:
+    transform 0.45s ease,
+    filter 0.3s ease;
+}
+
+
+/* =========================================================
+   IMAGE HOVER
+   ========================================================= */
+
+.news-card:hover .news-card-image {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.news-card-content {
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 15px 16px 16px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+.news-card-category {
+  align-self: flex-start;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  margin-bottom: 8px;
+
+  padding: 4px 9px;
+
+  background: #b30000;
+
+  color: #ffffff;
+
+  border-radius: 2px;
+
+  font-size: 10px;
+
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+
+  transition:
+    background 0.2s ease;
+}
+
+
+.news-card-category:hover {
+  background: #8f0000;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.news-card-title {
+  margin: 0 0 8px;
+
+  padding: 0;
+
+  color: #222222;
+
+  font-size: 18px;
+
+  line-height: 1.4;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   TITLE LINK
+   ========================================================= */
+
+.news-card-title a {
+  color: inherit;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease;
+}
+
+
+.news-card-title a:hover {
+  color: #b30000;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.news-card-description {
+  display: -webkit-box;
+
+  margin: 0 0 12px;
+
+  color: #666666;
+
+  font-size: 13px;
+
+  line-height: 1.65;
+
+  overflow: hidden;
+
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 3;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.news-card-date {
+  margin-top: auto;
+
+  padding-top: 10px;
+
+  border-top: 1px solid #eeeeee;
+
+  color: #999999;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   DATE ICON / OPTIONAL PREFIX
+   ========================================================= */
+
+.news-card-date::before {
+  content: "•";
+
+  margin-right: 6px;
+
+  color: #b30000;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+  .news-card-content {
+    padding: 14px 14px 15px;
+  }
+
+
+  .news-card-title {
+    font-size: 17px;
+
+    line-height: 1.4;
+  }
+
+
+  .news-card-description {
+    font-size: 12.5px;
+
+    line-height: 1.6;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .news-card-content {
+    padding: 13px 14px 14px;
+  }
+
+
+  .news-card-title {
+    font-size: 16px;
+
+    line-height: 1.4;
+
+    margin-bottom: 7px;
+  }
+
+
+  .news-card-description {
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    -webkit-line-clamp: 3;
+
+    margin-bottom: 10px;
+  }
+
+
+  .news-card-category {
+    margin-bottom: 7px;
+
+    padding: 4px 8px;
+
+    font-size: 9px;
+  }
+
+
+  .news-card-date {
+    padding-top: 8px;
+
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .news-card {
+    border-radius: 0;
+  }
+
+
+  /*
+     Image remains EXACTLY 16:9
+  */
+
+  .news-card-image-wrapper {
+    aspect-ratio: 16 / 9;
+  }
+
+
+  .news-card-content {
+    padding: 12px;
+  }
+
+
+  .news-card-title {
+    font-size: 15px;
+
+    line-height: 1.4;
+  }
+
+
+  .news-card-description {
+    font-size: 11.5px;
+
+    line-height: 1.55;
+
+    -webkit-line-clamp: 2;
+  }
+
+
+  .news-card-category {
+    font-size: 9px;
+
+    padding: 3px 7px;
+  }
+
+
+  .news-card-date {
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .news-card-content {
+    padding: 10px;
+  }
+
+
+  .news-card-title {
+    font-size: 14px;
+  }
+
+
+  .news-card-description {
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.news-card-image-link:focus-visible,
+.news-card-title a:focus-visible,
+.news-card-category:focus-visible {
+  outline: 2px solid #b30000;
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .news-card,
+  .news-card-image,
+  .news-card-title a,
+  .news-card-category {
+    transition: none;
+  }
+
+  .news-card:hover {
+    transform: none;
+  }
+
+  .news-card:hover .news-card-image {
+    transform: none;
+  }
+
+}

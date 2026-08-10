@@ -1,0 +1,2702 @@
+/* ============================================================
+   MONTHLY PAPER / DIGITAL NEWSPAPER
+   Samanateya Dhwani
+   Black & White Newspaper Design
+   ============================================================ */
+
+
+/* ============================================================
+   GOOGLE / KANNADA FONT
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Kannada:wght@400;500;600;700;800;900&family=Noto+Sans+Kannada:wght@400;500;600;700;800;900&display=swap");
+
+
+/* ============================================================
+   ROOT
+   ============================================================ */
+
+:root {
+  --paper-black: #111111;
+  --paper-dark: #222222;
+  --paper-gray: #555555;
+  --paper-light-gray: #777777;
+  --paper-border: #222222;
+  --paper-soft-border: #cfcfcf;
+
+  --paper-white: #ffffff;
+  --paper-off-white: #f7f7f4;
+  --paper-background: #e9e9e6;
+
+  --paper-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.14);
+
+  --paper-small-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.12);
+
+  --transition:
+    all 0.25s ease;
+}
+
+
+/* ============================================================
+   GLOBAL
+   ============================================================ */
+
+.monthly-paper-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.018) 1px,
+      transparent 1px
+    ),
+    var(--paper-background);
+
+  background-size:
+    5px 5px,
+    5px 5px;
+
+  color: var(--paper-black);
+
+  font-family:
+    "Noto Sans Kannada",
+    "Noto Serif Kannada",
+    Arial,
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   COMMON CONTAINER
+   ============================================================ */
+
+.monthly-paper-page .container {
+  width: min(
+    1400px,
+    calc(100% - 40px)
+  );
+
+  margin: 0 auto;
+}
+
+
+/* ============================================================
+   NEWSPAPER TOP HEADER
+   ============================================================ */
+
+.newspaper-top-header {
+  background: var(--paper-white);
+
+  border-bottom:
+    1px solid var(--paper-border);
+
+  padding:
+    20px 0 12px;
+
+  position: relative;
+}
+
+
+/* ============================================================
+   MASTHEAD
+   ============================================================ */
+
+.newspaper-masthead {
+  display: grid;
+
+  grid-template-columns:
+    1fr 2fr 1fr;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+/* ============================================================
+   MASTHEAD SIDE
+   ============================================================ */
+
+.masthead-side {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  min-height: 45px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    1.5px;
+
+  text-transform:
+    uppercase;
+
+  color:
+    var(--paper-gray);
+}
+
+.masthead-side.right {
+  justify-content: flex-end;
+
+  text-align: right;
+}
+
+
+/* ============================================================
+   MASTHEAD CENTER
+   ============================================================ */
+
+.masthead-center {
+  text-align: center;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+/* ============================================================
+   LOGO
+   ============================================================ */
+
+.masthead-logo {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    3px solid var(--paper-black);
+
+  border-radius: 50%;
+
+  font-family:
+    "Noto Serif Kannada",
+    serif;
+
+  font-size: 25px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  margin-bottom: 5px;
+}
+
+
+/* ============================================================
+   MAIN NEWSPAPER NAME
+   ============================================================ */
+
+.masthead-center h1 {
+  margin: 0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(32px, 5vw, 65px);
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: -1px;
+
+  color:
+    var(--paper-black);
+}
+
+
+/* ============================================================
+   NEWSPAPER SUBTITLE
+   ============================================================ */
+
+.masthead-center span {
+  margin-top: 7px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+  color:
+    var(--paper-gray);
+}
+
+
+/* ============================================================
+   HEADER RULE
+   ============================================================ */
+
+.masthead-rule {
+  height: 4px;
+
+  background:
+    var(--paper-black);
+
+  margin-top: 15px;
+
+  position: relative;
+}
+
+.masthead-rule::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: -6px;
+
+  height: 1px;
+
+  background:
+    var(--paper-black);
+}
+
+
+/* ============================================================
+   TAGLINE
+   ============================================================ */
+
+.newspaper-tagline {
+  text-align: center;
+
+  margin-top: 13px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  color:
+    var(--paper-gray);
+}
+
+
+/* ============================================================
+   MODE SELECTOR
+   ============================================================ */
+
+.newspaper-mode-section {
+  background:
+    var(--paper-white);
+
+  padding:
+    18px 0;
+
+  border-bottom:
+    1px solid var(--paper-soft-border);
+}
+
+
+/* ============================================================
+   MODE SWITCHER
+   ============================================================ */
+
+.newspaper-mode-switcher {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   MODE BUTTON
+   ============================================================ */
+
+.mode-button {
+  min-height: 50px;
+
+  padding:
+    10px 24px;
+
+  border:
+    2px solid var(--paper-black);
+
+  background:
+    var(--paper-white);
+
+  color:
+    var(--paper-black);
+
+  font-family:
+    "Noto Sans Kannada",
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    var(--transition);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  box-shadow:
+    3px 3px 0 var(--paper-black);
+}
+
+.mode-button:hover {
+  transform:
+    translate(
+      1px,
+      1px
+    );
+
+  box-shadow:
+    1px 1px 0 var(--paper-black);
+}
+
+.mode-button.active {
+  background:
+    var(--paper-black);
+
+  color:
+    var(--paper-white);
+
+  box-shadow:
+    3px 3px 0 #777777;
+}
+
+
+/* ============================================================
+   NEWSPAPER READER SECTION
+   ============================================================ */
+
+.newspaper-reader-section {
+  padding:
+    30px 0 60px;
+}
+
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+
+.newspaper-toolbar {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+
+  padding-bottom: 16px;
+
+  border-bottom:
+    3px solid var(--paper-black);
+}
+
+
+/* ============================================================
+   TOOLBAR KICKER
+   ============================================================ */
+
+.toolbar-kicker {
+  display: block;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  text-transform:
+    uppercase;
+
+  color:
+    var(--paper-gray);
+
+  margin-bottom: 5px;
+}
+
+
+/* ============================================================
+   TOOLBAR TITLE
+   ============================================================ */
+
+.newspaper-toolbar h2 {
+  margin: 0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      24px,
+      4vw,
+      38px
+    );
+
+  line-height: 1.1;
+
+  font-weight: 900;
+}
+
+
+/* ============================================================
+   PAID DOWNLOAD BUTTON
+   ============================================================ */
+
+.newspaper-paid-button {
+  border:
+    2px solid var(--paper-black);
+
+  background:
+    var(--paper-black);
+
+  color:
+    var(--paper-white);
+
+  min-height: 48px;
+
+  padding:
+    10px 20px;
+
+  font-family:
+    "Noto Sans Kannada",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    var(--transition);
+
+  white-space: nowrap;
+
+  box-shadow:
+    4px 4px 0 #999999;
+}
+
+.newspaper-paid-button:hover:not(:disabled) {
+  transform:
+    translate(
+      2px,
+      2px
+    );
+
+  box-shadow:
+    2px 2px 0 #777777;
+}
+
+.newspaper-paid-button:disabled {
+  opacity: 0.5;
+
+  cursor:
+    not-allowed;
+}
+
+
+/* ============================================================
+   PAYMENT ERROR
+   ============================================================ */
+
+.newspaper-payment-error {
+  background:
+    #eeeeee;
+
+  border:
+    1px solid #777777;
+
+  border-left:
+    5px solid var(--paper-black);
+
+  padding:
+    12px 15px;
+
+  margin-bottom:
+    20px;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+  color:
+    var(--paper-black);
+}
+
+
+/* ============================================================
+   NEWSPAPER SHEET
+   ============================================================ */
+
+.newspaper-sheet {
+  background:
+    var(--paper-white);
+
+  box-shadow:
+    var(--paper-shadow);
+
+  border:
+    1px solid #d0d0d0;
+
+  padding:
+    30px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   PAPER TEXTURE
+   ============================================================ */
+
+.newspaper-sheet::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.035;
+
+  background-image:
+    radial-gradient(
+      #000 0.6px,
+      transparent 0.7px
+    );
+
+  background-size:
+    5px 5px;
+}
+
+
+/* ============================================================
+   PAPER SHEET HEADER
+   ============================================================ */
+
+.paper-sheet-header {
+  position: relative;
+
+  z-index: 1;
+
+  text-align: center;
+
+  padding-bottom:
+    18px;
+
+  margin-bottom:
+    20px;
+
+  border-top:
+    5px solid var(--paper-black);
+
+  border-bottom:
+    3px solid var(--paper-black);
+
+  padding-top:
+    18px;
+}
+
+
+/* ============================================================
+   PAPER EDITION
+   ============================================================ */
+
+.paper-edition {
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    11px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    5px;
+
+  text-transform:
+    uppercase;
+
+  margin-bottom:
+    8px;
+}
+
+
+/* ============================================================
+   PAPER TITLE
+   ============================================================ */
+
+.paper-sheet-header h1 {
+  margin: 0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      28px,
+      5vw,
+      55px
+    );
+
+  font-weight:
+    900;
+
+  line-height:
+    1.1;
+}
+
+
+/* ============================================================
+   PAPER META
+   ============================================================ */
+
+.paper-sheet-meta {
+  display: flex;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    25px;
+
+  margin-top:
+    12px;
+
+  padding-top:
+    8px;
+
+  border-top:
+    1px solid #222222;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    10px;
+
+  font-weight:
+    800;
+
+  color:
+    #555555;
+}
+
+
+/* ============================================================
+   LEAD STORY
+   ============================================================ */
+
+.paper-lead-story {
+  position: relative;
+
+  z-index: 1;
+
+  display: grid;
+
+  grid-template-columns:
+    1.15fr 0.85fr;
+
+  gap:
+    22px;
+
+  padding-bottom:
+    22px;
+
+  margin-bottom:
+    25px;
+
+  border-bottom:
+    3px double var(--paper-black);
+}
+
+
+/* ============================================================
+   LEAD CONTENT
+   ============================================================ */
+
+.paper-lead-content {
+  min-width: 0;
+}
+
+
+/* ============================================================
+   CATEGORY
+   ============================================================ */
+
+.paper-category {
+  display: inline-block;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    1.5px;
+
+  text-transform:
+    uppercase;
+
+  border-bottom:
+    2px solid var(--paper-black);
+
+  padding-bottom:
+    3px;
+
+  margin-bottom:
+    8px;
+
+  color:
+    var(--paper-black);
+}
+
+
+/* ============================================================
+   LEAD TITLE
+   ============================================================ */
+
+.paper-lead-content h2 {
+  margin:
+    0 0 12px;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      28px,
+      4vw,
+      48px
+    );
+
+  font-weight:
+    900;
+
+  line-height:
+    1.16;
+
+  letter-spacing:
+    -0.5px;
+}
+
+
+/* ============================================================
+   LEAD DESCRIPTION
+   ============================================================ */
+
+.paper-lead-description {
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    16px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.65;
+
+  margin:
+    0 0 12px;
+
+  text-align:
+    justify;
+}
+
+
+/* ============================================================
+   LEAD CONTENT TEXT
+   ============================================================ */
+
+.paper-lead-content-text {
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    14px;
+
+  line-height:
+    1.75;
+
+  text-align:
+    justify;
+
+  margin:
+    0;
+}
+
+
+/* ============================================================
+   LEAD IMAGE
+   ============================================================ */
+
+.paper-lead-image {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  max-height:
+    400px;
+
+  object-fit:
+    cover;
+
+  filter:
+    grayscale(100%)
+    contrast(1.05);
+
+  border:
+    1px solid #222222;
+
+  display:
+    block;
+}
+
+
+/* ============================================================
+   BYLINE
+   ============================================================ */
+
+.paper-byline {
+  margin-top:
+    12px;
+
+  padding-top:
+    7px;
+
+  border-top:
+    1px solid #999999;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  font-weight:
+    700;
+
+  color:
+    #555555;
+}
+
+
+/* ============================================================
+   NEWS GRID
+   ============================================================ */
+
+.paper-news-grid {
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
+  gap:
+    0 18px;
+}
+
+
+/* ============================================================
+   INDIVIDUAL STORY
+   ============================================================ */
+
+.paper-story {
+  padding:
+    0 14px 20px 0;
+
+  margin-bottom:
+    20px;
+
+  border-right:
+    1px solid #999999;
+
+  border-bottom:
+    1px solid #555555;
+
+  min-width:
+    0;
+}
+
+.paper-story:nth-child(3n) {
+  border-right:
+    none;
+
+  padding-right:
+    0;
+}
+
+
+/* ============================================================
+   FEATURED STORY
+   ============================================================ */
+
+.paper-story-featured {
+  padding-top:
+    0;
+}
+
+
+/* ============================================================
+   STORY IMAGE
+   ============================================================ */
+
+.paper-story-image {
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    170px;
+
+  object-fit:
+    cover;
+
+  filter:
+    grayscale(100%)
+    contrast(1.05);
+
+  border:
+    1px solid #444444;
+
+  margin-bottom:
+    10px;
+}
+
+
+/* ============================================================
+   STORY TITLE
+   ============================================================ */
+
+.paper-story h3 {
+  margin:
+    0 0 8px;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    20px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1.3;
+}
+
+
+/* ============================================================
+   STORY DESCRIPTION
+   ============================================================ */
+
+.paper-story-description {
+  margin:
+    0 0 7px;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.55;
+
+  text-align:
+    justify;
+}
+
+
+/* ============================================================
+   STORY CONTENT
+   ============================================================ */
+
+.paper-story-content {
+  margin:
+    0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    12px;
+
+  line-height:
+    1.65;
+
+  text-align:
+    justify;
+
+  display:
+    -webkit-box;
+
+  -webkit-line-clamp:
+    8;
+
+  -webkit-box-orient:
+    vertical;
+
+  overflow:
+    hidden;
+}
+
+
+/* ============================================================
+   PAPER FOOTER
+   ============================================================ */
+
+.paper-sheet-footer {
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  margin-top:
+    8px;
+
+  padding:
+    12px 0 0;
+
+  border-top:
+    4px double var(--paper-black);
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap:
+    20px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    10px;
+}
+
+.paper-sheet-footer strong {
+  font-size:
+    12px;
+
+  letter-spacing:
+    1px;
+}
+
+.paper-sheet-footer span {
+  color:
+    #555555;
+
+  font-weight:
+    700;
+}
+
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.newspaper-loading {
+  min-height:
+    300px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    var(--paper-white);
+
+  border:
+    1px solid #cccccc;
+
+  box-shadow:
+    var(--paper-small-shadow);
+}
+
+
+/* ============================================================
+   SPINNER
+   ============================================================ */
+
+.newspaper-spinner {
+  width:
+    42px;
+
+  height:
+    42px;
+
+  border:
+    4px solid #dddddd;
+
+  border-top-color:
+    #111111;
+
+  border-radius:
+    50%;
+
+  animation:
+    newspaperSpin
+    0.8s linear infinite;
+
+  margin-bottom:
+    15px;
+}
+
+@keyframes newspaperSpin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* ============================================================
+   ERROR
+   ============================================================ */
+
+.newspaper-error {
+  min-height:
+    250px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  text-align:
+    center;
+
+  background:
+    var(--paper-white);
+
+  border:
+    1px solid #cccccc;
+
+  padding:
+    30px;
+}
+
+.newspaper-error h3 {
+  margin:
+    0 0 15px;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    18px;
+}
+
+.newspaper-error button {
+  border:
+    2px solid #111111;
+
+  background:
+    #111111;
+
+  color:
+    white;
+
+  padding:
+    9px 20px;
+
+  font-weight:
+    800;
+
+  cursor:
+    pointer;
+}
+
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.newspaper-empty {
+  min-height:
+    300px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    white;
+
+  border:
+    1px solid #cccccc;
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+}
+
+.newspaper-empty > *:first-child {
+  font-size:
+    45px;
+}
+
+.newspaper-empty h3 {
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    18px;
+
+  margin:
+    10px 0 0;
+}
+
+
+/* ============================================================
+   MONTHLY READER
+   ============================================================ */
+
+.monthly-reader-section {
+  padding:
+    35px 0 70px;
+}
+
+
+/* ============================================================
+   MONTHLY HEADING
+   ============================================================ */
+
+.monthly-reader-heading {
+  background:
+    var(--paper-white);
+
+  border-top:
+    5px solid #111111;
+
+  border-bottom:
+    3px double #111111;
+
+  padding:
+    25px;
+
+  margin-bottom:
+    25px;
+}
+
+.monthly-reader-heading span {
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    4px;
+
+  color:
+    #555555;
+}
+
+.monthly-reader-heading h2 {
+  margin:
+    6px 0 5px;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      28px,
+      5vw,
+      46px
+    );
+
+  font-weight:
+    900;
+
+  line-height:
+    1.15;
+}
+
+.monthly-reader-heading p {
+  margin:
+    0;
+
+  font-size:
+    13px;
+
+  color:
+    #555555;
+}
+
+
+/* ============================================================
+   MONTHLY EDITION SELECTOR
+   ============================================================ */
+
+.monthly-edition-selector {
+  background:
+    #111111;
+
+  padding:
+    15px 18px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    20px;
+
+  margin-bottom:
+    18px;
+}
+
+.monthly-edition-selector label {
+  color:
+    white;
+
+  font-family:
+    "Noto Sans Kannada",
+    Arial,
+    sans-serif;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+}
+
+.monthly-edition-selector select {
+  min-width:
+    320px;
+
+  max-width:
+    100%;
+
+  padding:
+    11px 14px;
+
+  border:
+    1px solid #999999;
+
+  background:
+    white;
+
+  color:
+    #111111;
+
+  font-family:
+    "Noto Sans Kannada",
+    Arial,
+    sans-serif;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+  outline:
+    none;
+
+  cursor:
+    pointer;
+}
+
+
+/* ============================================================
+   MONTHLY VIEWER
+   ============================================================ */
+
+.monthly-paper-viewer {
+  background:
+    white;
+
+  border:
+    1px solid #cccccc;
+
+  box-shadow:
+    var(--paper-shadow);
+
+  overflow:
+    hidden;
+}
+
+
+/* ============================================================
+   MONTHLY VIEWER HEADER
+   ============================================================ */
+
+.monthly-viewer-header {
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap:
+    20px;
+
+  padding:
+    18px 20px;
+
+  background:
+    #111111;
+
+  color:
+    white;
+}
+
+.monthly-viewer-header span {
+  display:
+    block;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    2px;
+
+  color:
+    #cccccc;
+
+  margin-bottom:
+    4px;
+}
+
+.monthly-viewer-header h2 {
+  margin:
+    0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      20px,
+      3vw,
+      30px
+    );
+
+  line-height:
+    1.2;
+
+  font-weight:
+    900;
+}
+
+
+/* ============================================================
+   MONTHLY DOWNLOAD
+   ============================================================ */
+
+.monthly-paid-download {
+  flex-shrink:
+    0;
+
+  border:
+    2px solid white;
+
+  background:
+    white;
+
+  color:
+    #111111;
+
+  padding:
+    10px 17px;
+
+  font-family:
+    "Noto Sans Kannada",
+    Arial,
+    sans-serif;
+
+  font-size:
+    12px;
+
+  font-weight:
+    900;
+
+  cursor:
+    pointer;
+
+  transition:
+    var(--transition);
+
+  white-space:
+    nowrap;
+}
+
+.monthly-paid-download:hover:not(:disabled) {
+  background:
+    #dddddd;
+}
+
+.monthly-paid-download:disabled {
+  opacity:
+    0.5;
+
+  cursor:
+    not-allowed;
+}
+
+
+/* ============================================================
+   PDF CONTAINER
+   ============================================================ */
+
+.monthly-pdf-container {
+  width:
+    100%;
+
+  height:
+    850px;
+
+  background:
+    #555555;
+
+  padding:
+    15px;
+}
+
+
+/* ============================================================
+   PDF IFRAME
+   ============================================================ */
+
+.monthly-pdf-frame {
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  border:
+    none;
+
+  background:
+    white;
+}
+
+
+/* ============================================================
+   PDF EMPTY
+   ============================================================ */
+
+.monthly-pdf-empty {
+  height:
+    500px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  text-align:
+    center;
+
+  background:
+    #f5f5f5;
+}
+
+.monthly-pdf-empty span {
+  font-size:
+    55px;
+}
+
+.monthly-pdf-empty h3 {
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    20px;
+
+  margin:
+    10px 0;
+}
+
+
+/* ============================================================
+   MONTHLY INFORMATION
+   ============================================================ */
+
+.monthly-viewer-information {
+  display:
+    flex;
+
+  gap:
+    20px;
+
+  padding:
+    20px;
+
+  border-top:
+    1px solid #cccccc;
+
+  background:
+    #fafafa;
+}
+
+.monthly-viewer-information img {
+  width:
+    130px;
+
+  height:
+    170px;
+
+  object-fit:
+    cover;
+
+  filter:
+    grayscale(100%);
+
+  border:
+    1px solid #222222;
+
+  flex-shrink:
+    0;
+}
+
+.monthly-viewer-information h3 {
+  margin:
+    0 0 8px;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    22px;
+
+  font-weight:
+    900;
+}
+
+.monthly-viewer-information p {
+  margin:
+    0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.7;
+
+  color:
+    #444444;
+}
+
+
+/* ============================================================
+   SOCIAL MEDIA SECTION
+   ============================================================ */
+
+.newspaper-social-section {
+  background:
+    #111111;
+
+  color:
+    white;
+
+  padding:
+    45px 0;
+}
+
+
+/* ============================================================
+   SOCIAL BOX
+   ============================================================ */
+
+.newspaper-social-box {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    30px;
+}
+
+
+/* ============================================================
+   SOCIAL TEXT
+   ============================================================ */
+
+.newspaper-social-box > div:first-child span {
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    9px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    3px;
+
+  color:
+    #bbbbbb;
+
+  text-transform:
+    uppercase;
+}
+
+.newspaper-social-box h2 {
+  margin:
+    7px 0 0;
+
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      22px,
+      4vw,
+      34px
+    );
+
+  font-weight:
+    900;
+
+  line-height:
+    1.25;
+}
+
+
+/* ============================================================
+   SOCIAL LINKS
+   ============================================================ */
+
+.newspaper-social-links {
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  justify-content:
+    flex-end;
+
+  gap:
+    8px;
+
+  max-width:
+    600px;
+}
+
+
+/* ============================================================
+   SOCIAL LINK
+   ============================================================ */
+
+.newspaper-social-links a {
+  min-height:
+    40px;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    8px 13px;
+
+  border:
+    1px solid #777777;
+
+  color:
+    white;
+
+  text-decoration:
+    none;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    11px;
+
+  font-weight:
+    800;
+
+  transition:
+    var(--transition);
+}
+
+.newspaper-social-links a:hover {
+  background:
+    white;
+
+  color:
+    #111111;
+
+  border-color:
+    white;
+}
+
+
+/* ============================================================
+   SOCIAL SPECIFIC
+   ============================================================ */
+
+.social-youtube {
+  border-color:
+    #777777;
+}
+
+.social-facebook {
+  border-color:
+    #777777;
+}
+
+.social-instagram {
+  border-color:
+    #777777;
+}
+
+.social-x {
+  border-color:
+    #777777;
+}
+
+.social-whatsapp {
+  border-color:
+    #777777;
+}
+
+.social-telegram {
+  border-color:
+    #777777;
+}
+
+
+/* ============================================================
+   FINAL NOTE
+   ============================================================ */
+
+.newspaper-final-note {
+  background:
+    #000000;
+
+  color:
+    white;
+
+  padding:
+    14px 0;
+}
+
+.newspaper-final-note .container {
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap:
+    20px;
+}
+
+.newspaper-final-note strong {
+  font-family:
+    "Noto Serif Kannada",
+    Georgia,
+    serif;
+
+  font-size:
+    15px;
+}
+
+.newspaper-final-note span {
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size:
+    10px;
+
+  color:
+    #aaaaaa;
+
+  font-weight:
+    700;
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET
+   ============================================================ */
+
+@media (max-width: 1100px) {
+
+  .paper-news-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+  }
+
+  .paper-story {
+    border-right:
+      1px solid #999999;
+  }
+
+  .paper-story:nth-child(3n) {
+    border-right:
+      1px solid #999999;
+
+    padding-right:
+      14px;
+  }
+
+  .paper-story:nth-child(2n) {
+    border-right:
+      none;
+
+    padding-right:
+      0;
+  }
+
+  .newspaper-social-box {
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
+  }
+
+  .newspaper-social-links {
+    justify-content:
+      flex-start;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET SMALL
+   ============================================================ */
+
+@media (max-width: 850px) {
+
+  .newspaper-masthead {
+    grid-template-columns:
+      1fr;
+  }
+
+  .masthead-side {
+    display:
+      none;
+  }
+
+  .masthead-center h1 {
+    font-size:
+      42px;
+  }
+
+  .paper-lead-story {
+    grid-template-columns:
+      1fr;
+  }
+
+  .paper-lead-image {
+    max-height:
+      350px;
+
+    order:
+      -1;
+  }
+
+  .monthly-edition-selector {
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+  }
+
+  .monthly-edition-selector select {
+    width:
+      100%;
+
+    min-width:
+      0;
+  }
+
+  .monthly-viewer-header {
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+  }
+
+  .monthly-paid-download {
+    width:
+      100%;
+  }
+
+  .monthly-pdf-container {
+    height:
+      700px;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+   ============================================================ */
+
+@media (max-width: 650px) {
+
+  .monthly-paper-page .container {
+    width:
+      calc(100% - 20px);
+  }
+
+
+  /* -----------------------------------------
+     HEADER
+     ----------------------------------------- */
+
+  .newspaper-top-header {
+    padding:
+      15px 0 10px;
+  }
+
+  .masthead-center h1 {
+    font-size:
+      34px;
+  }
+
+  .masthead-center span {
+    font-size:
+      7px;
+
+    letter-spacing:
+      2px;
+  }
+
+  .masthead-logo {
+    width:
+      35px;
+
+    height:
+      35px;
+
+    font-size:
+      21px;
+  }
+
+  .newspaper-tagline {
+    font-size:
+      8px;
+
+    letter-spacing:
+      0.5px;
+  }
+
+
+  /* -----------------------------------------
+     MODE BUTTONS
+     ----------------------------------------- */
+
+  .newspaper-mode-section {
+    padding:
+      12px 0;
+  }
+
+  .newspaper-mode-switcher {
+    width:
+      100%;
+
+    flex-direction:
+      column;
+  }
+
+  .mode-button {
+    width:
+      100%;
+
+    min-height:
+      46px;
+
+    padding:
+      9px 12px;
+
+    font-size:
+      12px;
+  }
+
+
+  /* -----------------------------------------
+     READER
+     ----------------------------------------- */
+
+  .newspaper-reader-section {
+    padding:
+      20px 0 40px;
+  }
+
+  .newspaper-toolbar {
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
+  }
+
+  .newspaper-paid-button {
+    width:
+      100%;
+  }
+
+
+  /* -----------------------------------------
+     NEWSPAPER SHEET
+     ----------------------------------------- */
+
+  .newspaper-sheet {
+    padding:
+      15px;
+  }
+
+  .paper-sheet-header {
+    padding-top:
+      12px;
+
+    padding-bottom:
+      12px;
+  }
+
+  .paper-edition {
+    font-size:
+      8px;
+
+    letter-spacing:
+      3px;
+  }
+
+  .paper-sheet-header h1 {
+    font-size:
+      27px;
+  }
+
+  .paper-sheet-meta {
+    gap:
+      10px;
+
+    font-size:
+      8px;
+  }
+
+
+  /* -----------------------------------------
+     LEAD
+     ----------------------------------------- */
+
+  .paper-lead-story {
+    gap:
+      12px;
+
+    margin-bottom:
+      18px;
+
+    padding-bottom:
+      18px;
+  }
+
+  .paper-lead-content h2 {
+    font-size:
+      25px;
+  }
+
+  .paper-lead-description {
+    font-size:
+      14px;
+  }
+
+  .paper-lead-content-text {
+    font-size:
+      12px;
+  }
+
+  .paper-lead-image {
+    max-height:
+      240px;
+  }
+
+
+  /* -----------------------------------------
+     STORIES
+     ----------------------------------------- */
+
+  .paper-news-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .paper-story,
+  .paper-story:nth-child(2n),
+  .paper-story:nth-child(3n) {
+    border-right:
+      none;
+
+    padding-right:
+      0;
+  }
+
+  .paper-story-image {
+    height:
+      210px;
+  }
+
+  .paper-story h3 {
+    font-size:
+      19px;
+  }
+
+  .paper-story-description {
+    font-size:
+      13px;
+  }
+
+  .paper-story-content {
+    font-size:
+      12px;
+  }
+
+
+  /* -----------------------------------------
+     FOOTER
+     ----------------------------------------- */
+
+  .paper-sheet-footer {
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
+  }
+
+
+  /* -----------------------------------------
+     MONTHLY
+     ----------------------------------------- */
+
+  .monthly-reader-section {
+    padding:
+      20px 0 40px;
+  }
+
+  .monthly-reader-heading {
+    padding:
+      18px;
+  }
+
+  .monthly-reader-heading h2 {
+    font-size:
+      27px;
+  }
+
+  .monthly-reader-heading p {
+    font-size:
+      12px;
+
+    line-height:
+      1.6;
+  }
+
+  .monthly-pdf-container {
+    height:
+      600px;
+
+    padding:
+      5px;
+  }
+
+  .monthly-viewer-information {
+    flex-direction:
+      column;
+  }
+
+  .monthly-viewer-information img {
+    width:
+      100%;
+
+    height:
+      300px;
+  }
+
+
+  /* -----------------------------------------
+     SOCIAL
+     ----------------------------------------- */
+
+  .newspaper-social-section {
+    padding:
+      30px 0;
+  }
+
+  .newspaper-social-links {
+    width:
+      100%;
+  }
+
+  .newspaper-social-links a {
+    flex:
+      1 1 calc(50% - 8px);
+
+    min-width:
+      120px;
+  }
+
+  .newspaper-final-note .container {
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    text-align:
+      center;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 400px) {
+
+  .masthead-center h1 {
+    font-size:
+      29px;
+  }
+
+  .paper-sheet-header h1 {
+    font-size:
+      23px;
+  }
+
+  .paper-lead-content h2 {
+    font-size:
+      22px;
+  }
+
+  .paper-story-image {
+    height:
+      180px;
+  }
+
+  .monthly-pdf-container {
+    height:
+      520px;
+  }
+
+  .newspaper-social-links a {
+    flex:
+      1 1 100%;
+  }
+}
+
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+
+@media print {
+
+  body {
+    background:
+      white !important;
+  }
+
+  .monthly-paper-page {
+    background:
+      white !important;
+  }
+
+  .newspaper-top-header,
+  .newspaper-mode-section,
+  .newspaper-toolbar,
+  .newspaper-social-section,
+  .newspaper-final-note {
+    display:
+      none !important;
+  }
+
+  .newspaper-reader-section {
+    padding:
+      0 !important;
+  }
+
+  .monthly-paper-page .container {
+    width:
+      100% !important;
+
+    max-width:
+      none !important;
+  }
+
+  .newspaper-sheet {
+    box-shadow:
+      none !important;
+
+    border:
+      none !important;
+
+    padding:
+      0 !important;
+  }
+
+  .paper-lead-image,
+  .paper-story-image {
+    filter:
+      grayscale(100%) !important;
+  }
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.mode-button:focus-visible,
+.newspaper-paid-button:focus-visible,
+.monthly-paid-download:focus-visible,
+.monthly-edition-selector select:focus-visible,
+.newspaper-error button:focus-visible,
+.newspaper-social-links a:focus-visible {
+  outline:
+    3px solid #777777;
+
+  outline-offset:
+    3px;
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+}
