@@ -34,20 +34,27 @@ function News() {
   // NEWS
   // ==================================================
 
-  const [newsList, setNewsList] =
-    useState([]);
+  const [
+    newsList,
+    setNewsList,
+  ] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
 
-  const [error, setError] =
-    useState("");
+  const [
+    error,
+    setError,
+  ] = useState("");
 
   // ==================================================
   // CATEGORIES
   //
-  // These keys NEVER change.
-  // Translation is only for display.
+  // IMPORTANT:
+  // These keys must match the backend database values.
+  // Translation is used only for display.
   // ==================================================
 
   const categories = [
@@ -94,52 +101,84 @@ function News() {
   ];
 
   // ==================================================
-  // LOAD NEWS
+  // LOAD PUBLISHED NEWS
   // ==================================================
 
   useEffect(() => {
-    const loadNews =
-      async () => {
-        try {
-          setLoading(true);
-          setError("");
+    let mounted = true;
 
-          const response =
-            await getPublishedNews({
-              category:
-                selectedCategory ===
-                "all"
-                  ? undefined
-                  : selectedCategory,
+    const loadNews = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-              page: 1,
+        const params = {
+          page: 1,
+          limit: 50,
+        };
 
-              limit: 50,
-            });
+        // Do not send category when "all" is selected.
+        if (
+          selectedCategory !== "all"
+        ) {
+          params.category =
+            selectedCategory;
+        }
 
-          setNewsList(
-            response.news || []
-          );
-        } catch (error) {
-          console.error(
-            "News loading error:",
-            error
+        const response =
+          await getPublishedNews(
+            params
           );
 
-          setError(
-            error.message ||
-              "ಸುದ್ದಿಗಳನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
-          );
+        if (!mounted) {
+          return;
+        }
 
-          setNewsList([]);
-        } finally {
+        const news =
+          response?.news ||
+          response?.data ||
+          [];
+
+        setNewsList(
+          Array.isArray(news)
+            ? news
+            : []
+        );
+      } catch (error) {
+        console.error(
+          "News loading error:",
+          error
+        );
+
+        if (!mounted) {
+          return;
+        }
+
+        setError(
+          error?.message ||
+            (
+              language === "kn"
+                ? "ಸುದ್ದಿಗಳನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+                : "Unable to load news."
+            )
+        );
+
+        setNewsList([]);
+      } finally {
+        if (mounted) {
           setLoading(false);
         }
-      };
+      }
+    };
 
     loadNews();
+
+    return () => {
+      mounted = false;
+    };
   }, [
     selectedCategory,
+    language,
   ]);
 
   // ==================================================
@@ -153,18 +192,22 @@ function News() {
       return "";
     }
 
-    return new Date(
-      date
-    ).toLocaleDateString(
-      language === "kn"
-        ? "kn-IN"
-        : "en-IN",
-      {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }
-    );
+    try {
+      return new Date(
+        date
+      ).toLocaleDateString(
+        language === "kn"
+          ? "kn-IN"
+          : "en-IN",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }
+      );
+    } catch {
+      return "";
+    }
   };
 
   // ==================================================
@@ -174,6 +217,10 @@ function News() {
   const getCategoryName = (
     category
   ) => {
+    if (!category) {
+      return "";
+    }
+
     const categoryMap = {
       karnataka:
         t.karnataka,
@@ -205,36 +252,91 @@ function News() {
 
     return (
       categoryMap[
-        category
-      ] || category
+        String(category)
+          .trim()
+          .toLowerCase()
+      ] ||
+      category
     );
   };
 
   // ==================================================
   // PREPARE NEWS FOR NEWS CARD
+  //
+  // IMPORTANT:
+  // Keep the complete original news object.
+  //
+  // This preserves:
+  // - _id
+  // - id
+  // - slug
+  // - title
+  // - description
+  // - image
+  // - images
+  // - category
+  // - publishedAt
+  // - createdAt
+  // - featured
+  // - breakingNews
+  //
+  // NewsCard can therefore use:
+  //
+  // news.slug
+  //
+  // for the SEO-friendly URL.
   // ==================================================
 
   const preparedNews =
     newsList.map(
-      (news) => ({
-        ...news,
+      (news) => {
+        const newsId =
+          news?._id ||
+          news?.id;
 
-        id:
-          news._id ||
-          news.id,
+        return {
+          ...news,
 
-        category:
-          getCategoryName(
-            news.category
-          ),
+          // Keep both IDs for compatibility.
+          id: newsId,
 
-        date:
-          formatDate(
-            news.publishedAt ||
-              news.createdAt
-          ),
-      })
+          // Keep slug untouched.
+          // Backend generates this automatically.
+          slug:
+            news?.slug || "",
+
+          category:
+            getCategoryName(
+              news?.category
+            ),
+
+          date:
+            formatDate(
+              news?.publishedAt ||
+                news?.createdAt
+            ),
+        };
+      }
     );
+
+  // ==================================================
+  // HANDLE CATEGORY CHANGE
+  // ==================================================
+
+  const handleCategoryChange = (
+    categoryKey
+  ) => {
+    if (
+      categoryKey ===
+      selectedCategory
+    ) {
+      return;
+    }
+
+    setSelectedCategory(
+      categoryKey
+    );
+  };
 
   // ==================================================
   // RENDER
@@ -271,32 +373,49 @@ function News() {
 
         <div className="container">
 
-          <div className="news-filters">
+          <div
+            className="news-filters"
+            role="tablist"
+            aria-label={
+              language === "kn"
+                ? "ಸುದ್ದಿ ವರ್ಗಗಳು"
+                : "News categories"
+            }
+          >
 
             {categories.map(
-              (category) => (
-                <button
-                  type="button"
-                  key={
-                    category.key
-                  }
-                  className={
-                    selectedCategory ===
-                    category.key
-                      ? "news-filter active"
-                      : "news-filter"
-                  }
-                  onClick={() =>
-                    setSelectedCategory(
+              (category) => {
+
+                const isActive =
+                  selectedCategory ===
+                  category.key;
+
+                return (
+                  <button
+                    type="button"
+                    key={
                       category.key
-                    )
-                  }
-                >
-                  {
-                    category.name
-                  }
-                </button>
-              )
+                    }
+                    className={
+                      isActive
+                        ? "news-filter active"
+                        : "news-filter"
+                    }
+                    onClick={() =>
+                      handleCategoryChange(
+                        category.key
+                      )
+                    }
+                    aria-pressed={
+                      isActive
+                    }
+                  >
+                    {
+                      category.name
+                    }
+                  </button>
+                );
+              }
             )}
 
           </div>
@@ -318,7 +437,11 @@ function News() {
           ================================= */}
 
           {loading && (
-            <div className="no-news">
+            <div
+              className="no-news"
+              role="status"
+              aria-live="polite"
+            >
 
               <h3>
                 {language === "kn"
@@ -335,7 +458,10 @@ function News() {
 
           {!loading &&
             error && (
-              <div className="no-news">
+              <div
+                className="no-news"
+                role="alert"
+              >
 
                 <h3>
                   {language === "kn"
@@ -361,16 +487,24 @@ function News() {
               <div className="news-grid">
 
                 {preparedNews.map(
-                  (news) => (
-                    <NewsCard
-                      key={
-                        news.id
-                      }
-                      news={
-                        news
-                      }
-                    />
-                  )
+                  (news) => {
+
+                    const newsKey =
+                      news?.slug ||
+                      news?._id ||
+                      news?.id;
+
+                    return (
+                      <NewsCard
+                        key={
+                          newsKey
+                        }
+                        news={
+                          news
+                        }
+                      />
+                    );
+                  }
                 )}
 
               </div>

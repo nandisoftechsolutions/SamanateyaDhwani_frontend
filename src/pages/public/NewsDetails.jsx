@@ -81,32 +81,35 @@ function NewsDetails() {
         setLoading(true);
         setError("");
 
+        const routeValue =
+          String(id || "").trim();
+
+        if (!routeValue) {
+          throw new Error(
+            language === "kn"
+              ? "ಸುದ್ದಿ ಲಿಂಕ್ ಲಭ್ಯವಿಲ್ಲ."
+              : "News link is missing."
+          );
+        }
+
         let response;
 
         // ==================================================
-        // IMPORTANT ID / SLUG DETECTION
-        // ==================================================
-        //
-        // Current route:
-        //
-        // /news/:id
+        // IMPORTANT:
         //
         // MongoDB ObjectId:
+        // 24 hexadecimal characters
         //
-        // 6a7a279536f27a9ecd59aa17
+        // Example:
+        // 68a7f9c2xxxxxxxxxxxxxxxx
         //
-        // If it is a MongoDB ObjectId, directly use:
+        // Use /api/news/:id
         //
-        // /api/news/:id
+        // Otherwise:
+        // Treat route value as slug.
         //
-        // Do NOT call:
-        //
-        // /api/news/slug/:id
-        //
+        // Use /api/news/slug/:slug
         // ==================================================
-
-        const routeValue =
-          String(id || "").trim();
 
         const isMongoObjectId =
           /^[a-fA-F0-9]{24}$/.test(
@@ -121,7 +124,9 @@ function NewsDetails() {
         } else {
           response =
             await getNewsBySlug(
-              routeValue
+              decodeURIComponent(
+                routeValue
+              )
             );
         }
 
@@ -177,7 +182,9 @@ function NewsDetails() {
               relatedResponse?.data ||
               []
             );
-          } catch (relatedError) {
+          } catch (
+            relatedError
+          ) {
             console.error(
               "Related news error:",
               relatedError
@@ -187,6 +194,8 @@ function NewsDetails() {
               setRelatedNews([]);
             }
           }
+        } else {
+          setRelatedNews([]);
         }
       } catch (loadError) {
         console.error(
@@ -215,16 +224,7 @@ function NewsDetails() {
       }
     };
 
-    if (id) {
-      loadNews();
-    } else {
-      setLoading(false);
-      setError(
-        language === "kn"
-          ? "ಸುದ್ದಿ ID ಲಭ್ಯವಿಲ್ಲ."
-          : "News ID is missing."
-      );
-    }
+    loadNews();
 
     return () => {
       mounted = false;
@@ -235,7 +235,9 @@ function NewsDetails() {
   // DATE FORMAT
   // ====================================================
 
-  const formatDate = (date) => {
+  const formatDate = (
+    date
+  ) => {
     if (!date) {
       return "";
     }
@@ -345,6 +347,7 @@ function NewsDetails() {
               image.url ||
               image.secure_url ||
               image.image ||
+              image.imageUrl ||
               "";
           }
 
@@ -381,6 +384,30 @@ function NewsDetails() {
       ) {
         images.unshift(
           mainImage
+        );
+      }
+    }
+
+    // ==================================================
+    // IMAGE URL FALLBACK
+    // ==================================================
+
+    if (
+      news.imageUrl &&
+      typeof news.imageUrl ===
+        "string"
+    ) {
+      const imageUrl =
+        news.imageUrl.trim();
+
+      if (
+        imageUrl &&
+        !images.includes(
+          imageUrl
+        )
+      ) {
+        images.unshift(
+          imageUrl
         );
       }
     }
@@ -463,6 +490,8 @@ function NewsDetails() {
 
   // ====================================================
   // AUTOMATIC SLIDESHOW
+  //
+  // 5 seconds
   // ====================================================
 
   useEffect(() => {
@@ -562,6 +591,273 @@ function NewsDetails() {
   ]);
 
   // ====================================================
+  // ARTICLE TITLE
+  // ====================================================
+
+  const articleTitle =
+    news
+      ? (
+          language === "kn"
+            ? news.titleKn ||
+              news.title ||
+              news.titleEn
+            : news.titleEn ||
+              news.title ||
+              news.titleKn
+        )
+      : "";
+
+  // ====================================================
+  // ARTICLE DESCRIPTION
+  // ====================================================
+
+  const articleDescription =
+    news
+      ? (
+          language === "kn"
+            ? news.descriptionKn ||
+              news.description ||
+              news.descriptionEn
+            : news.descriptionEn ||
+              news.description ||
+              news.descriptionKn
+        )
+      : "";
+
+  // ====================================================
+  // UPDATE BROWSER / SOCIAL META DATA
+  //
+  // NOTE:
+  // This improves browser SEO and share metadata.
+  //
+  // For guaranteed WhatsApp/Facebook previews,
+  // server-side OG metadata is recommended.
+  // ====================================================
+
+  useEffect(() => {
+    if (!news) {
+      return;
+    }
+
+    const title =
+      articleTitle ||
+      (
+        language === "kn"
+          ? "ಸಮಾನತೆ ಧ್ವನಿ"
+          : "Samanateya Dhwani"
+      );
+
+    const description =
+      articleDescription ||
+      "";
+
+    const canonicalUrl =
+      window.location.href;
+
+    const image =
+      imageUrls[0] ||
+      "";
+
+    // ==================================================
+    // DOCUMENT TITLE
+    // ==================================================
+
+    document.title =
+      `${title} | ಸಮಾನತೆ ಧ್ವನಿ`;
+
+    // ==================================================
+    // HELPER
+    // ==================================================
+
+    const setMeta = (
+      attribute,
+      attributeValue,
+      content
+    ) => {
+      if (!content) {
+        return;
+      }
+
+      let element =
+        document.head.querySelector(
+          `meta[${attribute}="${attributeValue}"]`
+        );
+
+      if (!element) {
+        element =
+          document.createElement(
+            "meta"
+          );
+
+        element.setAttribute(
+          attribute,
+          attributeValue
+        );
+
+        document.head.appendChild(
+          element
+        );
+      }
+
+      element.setAttribute(
+        "content",
+        content
+      );
+    };
+
+    // ==================================================
+    // DESCRIPTION
+    // ==================================================
+
+    setMeta(
+      "name",
+      "description",
+      description
+    );
+
+    // ==================================================
+    // OPEN GRAPH
+    // ==================================================
+
+    setMeta(
+      "property",
+      "og:title",
+      title
+    );
+
+    setMeta(
+      "property",
+      "og:description",
+      description
+    );
+
+    setMeta(
+      "property",
+      "og:url",
+      canonicalUrl
+    );
+
+    setMeta(
+      "property",
+      "og:type",
+      "article"
+    );
+
+    if (image) {
+      setMeta(
+        "property",
+        "og:image",
+        image
+      );
+    }
+
+    // ==================================================
+    // TWITTER
+    // ==================================================
+
+    setMeta(
+      "name",
+      "twitter:card",
+      "summary_large_image"
+    );
+
+    setMeta(
+      "name",
+      "twitter:title",
+      title
+    );
+
+    setMeta(
+      "name",
+      "twitter:description",
+      description
+    );
+
+    if (image) {
+      setMeta(
+        "name",
+        "twitter:image",
+        image
+      );
+    }
+
+    // ==================================================
+    // CANONICAL URL
+    // ==================================================
+
+    let canonical =
+      document.head.querySelector(
+        'link[rel="canonical"]'
+      );
+
+    if (!canonical) {
+      canonical =
+        document.createElement(
+          "link"
+        );
+
+      canonical.setAttribute(
+        "rel",
+        "canonical"
+      );
+
+      document.head.appendChild(
+        canonical
+      );
+    }
+
+    canonical.setAttribute(
+      "href",
+      canonicalUrl
+    );
+
+    // ==================================================
+    // ARTICLE META
+    // ==================================================
+
+    if (
+      news.publishedAt
+    ) {
+      setMeta(
+        "property",
+        "article:published_time",
+        new Date(
+          news.publishedAt
+        ).toISOString()
+      );
+    }
+
+    if (
+      news.updatedAt
+    ) {
+      setMeta(
+        "property",
+        "article:modified_time",
+        new Date(
+          news.updatedAt
+        ).toISOString()
+      );
+    }
+  }, [
+    news,
+    articleTitle,
+    articleDescription,
+    imageUrls,
+    language,
+  ]);
+
+  // ====================================================
+  // SHARE URL
+  //
+  // Always use the actual clean article URL.
+  // ====================================================
+
+  const shareUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : "";
+
+  // ====================================================
   // SHARE WHATSAPP
   // ====================================================
 
@@ -571,11 +867,10 @@ function NewsDetails() {
         return;
       }
 
-      const url =
-        window.location.href;
-
       const text =
-        `${news.title || ""} ${url}`;
+        `${articleTitle || ""}\n\n${
+          articleDescription || ""
+        }\n\n${shareUrl}`;
 
       window.open(
         `https://wa.me/?text=${encodeURIComponent(
@@ -592,12 +887,13 @@ function NewsDetails() {
 
   const shareOnFacebook =
     () => {
-      const url =
-        window.location.href;
+      if (!shareUrl) {
+        return;
+      }
 
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-          url
+          shareUrl
         )}`,
         "_blank",
         "noopener,noreferrer"
@@ -612,7 +908,7 @@ function NewsDetails() {
     async () => {
       try {
         await navigator.clipboard.writeText(
-          window.location.href
+          shareUrl
         );
 
         alert(
@@ -620,11 +916,49 @@ function NewsDetails() {
             ? "ಸುದ್ದಿಯ ಲಿಂಕ್ ಕಾಪಿ ಮಾಡಲಾಗಿದೆ."
             : "News link copied successfully."
         );
-      } catch (copyError) {
+      } catch (
+        copyError
+      ) {
         console.error(
           "Unable to copy link:",
           copyError
         );
+
+        // Fallback
+        try {
+          const textarea =
+            document.createElement(
+              "textarea"
+            );
+
+          textarea.value =
+            shareUrl;
+
+          document.body.appendChild(
+            textarea
+          );
+
+          textarea.select();
+
+          document.execCommand(
+            "copy"
+          );
+
+          textarea.remove();
+
+          alert(
+            language === "kn"
+              ? "ಸುದ್ದಿಯ ಲಿಂಕ್ ಕಾಪಿ ಮಾಡಲಾಗಿದೆ."
+              : "News link copied successfully."
+          );
+        } catch (
+          fallbackError
+        ) {
+          console.error(
+            "Copy fallback failed:",
+            fallbackError
+          );
+        }
       }
     };
 
@@ -709,12 +1043,10 @@ function NewsDetails() {
   // ====================================================
 
   const title =
-    news.title ||
-    "";
+    articleTitle || "";
 
   const description =
-    news.description ||
-    "";
+    articleDescription || "";
 
   const category =
     getCategoryName(
@@ -735,9 +1067,20 @@ function NewsDetails() {
   // ARTICLE CONTENT
   // ====================================================
 
+  const articleContent =
+    language === "kn"
+      ? news.contentKn ||
+        news.content ||
+        news.contentEn ||
+        ""
+      : news.contentEn ||
+        news.content ||
+        news.contentKn ||
+        "";
+
   const content =
-    news.content
-      ? news.content
+    articleContent
+      ? articleContent
           .split(/\n\s*\n/)
           .filter(
             (paragraph) =>
@@ -772,6 +1115,28 @@ function NewsDetails() {
     );
 
   // ====================================================
+  // IMAGE ERROR HANDLER
+  // ====================================================
+
+  const handleImageError =
+    (event) => {
+      if (
+        event.currentTarget.dataset
+          .fallbackApplied ===
+        "true"
+      ) {
+        return;
+      }
+
+      event.currentTarget.dataset
+        .fallbackApplied =
+        "true";
+
+      event.currentTarget.src =
+        "/news-placeholder.jpg";
+    };
+
+  // ====================================================
   // RENDER
   // ====================================================
 
@@ -790,7 +1155,9 @@ function NewsDetails() {
 
             <article className="news-article">
 
-              {/* CATEGORY */}
+              {/* ========================================
+                  CATEGORY
+              ======================================== */}
 
               {category && (
                 <div className="article-category">
@@ -798,13 +1165,17 @@ function NewsDetails() {
                 </div>
               )}
 
-              {/* TITLE */}
+              {/* ========================================
+                  TITLE
+              ======================================== */}
 
               <h1 className="article-title">
                 {title}
               </h1>
 
-              {/* DESCRIPTION */}
+              {/* ========================================
+                  DESCRIPTION
+              ======================================== */}
 
               {description && (
                 <p className="article-description">
@@ -812,7 +1183,9 @@ function NewsDetails() {
                 </p>
               )}
 
-              {/* META */}
+              {/* ========================================
+                  META
+              ======================================== */}
 
               <div className="article-meta">
 
@@ -848,7 +1221,9 @@ function NewsDetails() {
                   }
                 >
 
-                  {/* MAIN IMAGE */}
+                  {/* ==================================
+                      MAIN IMAGE
+                  ================================== */}
 
                   <div
                     className="gallery-main-image"
@@ -868,9 +1243,14 @@ function NewsDetails() {
                       alt={`${title} - ${
                         selectedImageIndex + 1
                       }`}
+                      onError={
+                        handleImageError
+                      }
                     />
 
-                    {/* IMAGE COUNTER */}
+                    {/* ==================================
+                        IMAGE COUNTER
+                    ================================== */}
 
                     {hasMultipleImages && (
                       <div className="gallery-image-count">
@@ -890,7 +1270,9 @@ function NewsDetails() {
                       </div>
                     )}
 
-                    {/* PREVIOUS */}
+                    {/* ==================================
+                        PREVIOUS ARROW
+                    ================================== */}
 
                     {hasMultipleImages && (
                       <button
@@ -910,7 +1292,9 @@ function NewsDetails() {
                       </button>
                     )}
 
-                    {/* NEXT */}
+                    {/* ==================================
+                        NEXT ARROW
+                    ================================== */}
 
                     {hasMultipleImages && (
                       <button
@@ -1021,6 +1405,9 @@ function NewsDetails() {
                               alt={`${title} - ${
                                 index + 1
                               }`}
+                              onError={
+                                handleImageError
+                              }
                             />
 
                           </button>
@@ -1183,7 +1570,9 @@ function NewsDetails() {
               }
             >
 
-              {/* CLOSE */}
+              {/* ==================================
+                  CLOSE
+              ================================== */}
 
               <button
                 type="button"
@@ -1200,7 +1589,9 @@ function NewsDetails() {
                 ×
               </button>
 
-              {/* COUNTER */}
+              {/* ==================================
+                  COUNTER
+              ================================== */}
 
               <div className="gallery-modal-counter">
 
@@ -1210,7 +1601,9 @@ function NewsDetails() {
 
               </div>
 
-              {/* IMAGE */}
+              {/* ==================================
+                  IMAGE
+              ================================== */}
 
               <div className="gallery-modal-image">
 
@@ -1223,11 +1616,16 @@ function NewsDetails() {
                   alt={`${title} - ${
                     selectedImageIndex + 1
                   }`}
+                  onError={
+                    handleImageError
+                  }
                 />
 
               </div>
 
-              {/* PREVIOUS */}
+              {/* ==================================
+                  PREVIOUS
+              ================================== */}
 
               {hasMultipleImages && (
 
@@ -1248,7 +1646,9 @@ function NewsDetails() {
 
               )}
 
-              {/* NEXT */}
+              {/* ==================================
+                  NEXT
+              ================================== */}
 
               {hasMultipleImages && (
 
@@ -1269,7 +1669,9 @@ function NewsDetails() {
 
               )}
 
-              {/* MODAL THUMBNAILS */}
+              {/* ==================================
+                  MODAL THUMBNAILS
+              ================================== */}
 
               {hasMultipleImages && (
 
@@ -1309,6 +1711,9 @@ function NewsDetails() {
                           alt={`Thumbnail ${
                             index + 1
                           }`}
+                          onError={
+                            handleImageError
+                          }
                         />
 
                       </button>
