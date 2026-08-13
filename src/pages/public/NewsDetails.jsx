@@ -1,5 +1,6 @@
 import React, {
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -11,8 +12,8 @@ import {
 import NewsCard from "../../components/NewsCard";
 
 import {
-  getNewsBySlug,
   getNewsById,
+  getNewsBySlug,
   getRelatedNews,
 } from "../../services/api";
 
@@ -22,6 +23,10 @@ import {
 
 import "./NewsDetails.css";
 
+// ======================================================
+// NEWS DETAILS PAGE
+// ======================================================
+
 function NewsDetails() {
   const { id } = useParams();
 
@@ -30,12 +35,11 @@ function NewsDetails() {
     t,
   } = useLanguage();
 
-  // ==================================================
+  // ====================================================
   // STATE
-  // ==================================================
+  // ====================================================
 
-  const [news, setNews] =
-    useState(null);
+  const [news, setNews] = useState(null);
 
   const [relatedNews, setRelatedNews] =
     useState([]);
@@ -46,126 +50,208 @@ function NewsDetails() {
   const [error, setError] =
     useState("");
 
-  // ==================================================
+  // ====================================================
+  // GALLERY STATE
+  // ====================================================
+
+  const [
+    selectedImageIndex,
+    setSelectedImageIndex,
+  ] = useState(0);
+
+  const [
+    showGalleryModal,
+    setShowGalleryModal,
+  ] = useState(false);
+
+  const [
+    isAutoSlidePaused,
+    setIsAutoSlidePaused,
+  ] = useState(false);
+
+  // ====================================================
   // LOAD NEWS
-  // ==================================================
+  // ====================================================
 
   useEffect(() => {
-    const loadNews =
-      async () => {
-        try {
-          setLoading(true);
-          setError("");
+    let mounted = true;
 
-          let response;
+    const loadNews = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-          /*
-            Try slug first.
+        let response;
 
-            If your URL is:
+        // ==================================================
+        // IMPORTANT ID / SLUG DETECTION
+        // ==================================================
+        //
+        // Current route:
+        //
+        // /news/:id
+        //
+        // MongoDB ObjectId:
+        //
+        // 6a7a279536f27a9ecd59aa17
+        //
+        // If it is a MongoDB ObjectId, directly use:
+        //
+        // /api/news/:id
+        //
+        // Do NOT call:
+        //
+        // /api/news/slug/:id
+        //
+        // ==================================================
 
-            /news/my-news-slug
+        const routeValue =
+          String(id || "").trim();
 
-            backend:
-            /api/news/slug/my-news-slug
-          */
+        const isMongoObjectId =
+          /^[a-fA-F0-9]{24}$/.test(
+            routeValue
+          );
 
-          try {
-            response =
-              await getNewsBySlug(id);
-          } catch {
-            /*
-              Fallback for MongoDB ObjectId URL:
-
-              /news/68xxxxxxxxxxxx
-            */
-
-            response =
-              await getNewsById(id);
-          }
-
-          const article =
-            response.news ||
-            response.data ||
-            null;
-
-          if (!article) {
-            throw new Error(
-              language === "kn"
-                ? "ಸುದ್ದಿ ಕಂಡುಬಂದಿಲ್ಲ."
-                : "News article not found."
+        if (isMongoObjectId) {
+          response =
+            await getNewsById(
+              routeValue
             );
-          }
+        } else {
+          response =
+            await getNewsBySlug(
+              routeValue
+            );
+        }
 
-          setNews(article);
+        if (!mounted) {
+          return;
+        }
 
-          // ==========================================
-          // LOAD RELATED NEWS
-          // ==========================================
+        // ==================================================
+        // RESPONSE FORMAT SUPPORT
+        // ==================================================
 
-          if (article._id) {
-            try {
-              const relatedResponse =
-                await getRelatedNews(
-                  article._id
-                );
+        const article =
+          response?.news ||
+          response?.data ||
+          response?.article ||
+          response;
 
-              setRelatedNews(
-                relatedResponse.news ||
-                  []
+        if (!article) {
+          throw new Error(
+            language === "kn"
+              ? "ಸುದ್ದಿ ಕಂಡುಬಂದಿಲ್ಲ."
+              : "News article not found."
+          );
+        }
+
+        setNews(article);
+
+        // Reset gallery
+        setSelectedImageIndex(0);
+        setShowGalleryModal(false);
+
+        // ==================================================
+        // RELATED NEWS
+        // ==================================================
+
+        const articleId =
+          article._id ||
+          article.id;
+
+        if (articleId) {
+          try {
+            const relatedResponse =
+              await getRelatedNews(
+                articleId
               );
-            } catch (
+
+            if (!mounted) {
+              return;
+            }
+
+            setRelatedNews(
+              relatedResponse?.news ||
+              relatedResponse?.data ||
+              []
+            );
+          } catch (relatedError) {
+            console.error(
+              "Related news error:",
               relatedError
-            ) {
-              console.error(
-                "Related news error:",
-                relatedError
-              );
+            );
 
+            if (mounted) {
               setRelatedNews([]);
             }
           }
-        } catch (error) {
-          console.error(
-            "News details error:",
-            error
-          );
+        }
+      } catch (loadError) {
+        console.error(
+          "News details error:",
+          loadError
+        );
 
-          setError(
-            error.message ||
-              (
-                language === "kn"
-                  ? "ಸುದ್ದಿಯನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
-                  : "Unable to load news."
-              )
-          );
+        if (!mounted) {
+          return;
+        }
 
-          setNews(null);
-        } finally {
+        setNews(null);
+
+        setError(
+          loadError?.message ||
+          (
+            language === "kn"
+              ? "ಸುದ್ದಿಯನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+              : "Unable to load news."
+          )
+        );
+      } finally {
+        if (mounted) {
           setLoading(false);
         }
-      };
+      }
+    };
 
-    loadNews();
-  }, [
-    id,
-    language,
-  ]);
+    if (id) {
+      loadNews();
+    } else {
+      setLoading(false);
+      setError(
+        language === "kn"
+          ? "ಸುದ್ದಿ ID ಲಭ್ಯವಿಲ್ಲ."
+          : "News ID is missing."
+      );
+    }
 
-  // ==================================================
-  // FORMAT DATE
-  // ==================================================
+    return () => {
+      mounted = false;
+    };
+  }, [id, language]);
 
-  const formatDate = (
-    date
-  ) => {
+  // ====================================================
+  // DATE FORMAT
+  // ====================================================
+
+  const formatDate = (date) => {
     if (!date) {
       return "";
     }
 
-    return new Date(
-      date
-    ).toLocaleDateString(
+    const parsedDate =
+      new Date(date);
+
+    if (
+      Number.isNaN(
+        parsedDate.getTime()
+      )
+    ) {
+      return "";
+    }
+
+    return parsedDate.toLocaleDateString(
       language === "kn"
         ? "kn-IN"
         : "en-IN",
@@ -177,13 +263,17 @@ function NewsDetails() {
     );
   };
 
-  // ==================================================
-  // CATEGORY NAME
-  // ==================================================
+  // ====================================================
+  // CATEGORY
+  // ====================================================
 
   const getCategoryName = (
     category
   ) => {
+    if (!category) {
+      return "";
+    }
+
     const categoryMap = {
       karnataka:
         t.karnataka,
@@ -214,36 +304,291 @@ function NewsDetails() {
     };
 
     return (
-      categoryMap[
-        category
-      ] || category
+      categoryMap[category] ||
+      category
     );
   };
 
-  // ==================================================
-  // SHARE - WHATSAPP
-  // ==================================================
+  // ====================================================
+  // IMAGE LIST
+  // ====================================================
+
+  const imageUrls = useMemo(() => {
+    if (!news) {
+      return [];
+    }
+
+    const images = [];
+
+    // ==================================================
+    // MULTIPLE IMAGES
+    // ==================================================
+
+    if (
+      Array.isArray(news.images)
+    ) {
+      news.images.forEach(
+        (image) => {
+          let url = "";
+
+          if (
+            typeof image ===
+            "string"
+          ) {
+            url = image;
+          } else if (
+            image &&
+            typeof image ===
+              "object"
+          ) {
+            url =
+              image.url ||
+              image.secure_url ||
+              image.image ||
+              "";
+          }
+
+          if (
+            typeof url ===
+              "string" &&
+            url.trim()
+          ) {
+            images.push(
+              url.trim()
+            );
+          }
+        }
+      );
+    }
+
+    // ==================================================
+    // OLD SINGLE IMAGE
+    // ==================================================
+
+    if (
+      news.image &&
+      typeof news.image ===
+        "string"
+    ) {
+      const mainImage =
+        news.image.trim();
+
+      if (
+        mainImage &&
+        !images.includes(
+          mainImage
+        )
+      ) {
+        images.unshift(
+          mainImage
+        );
+      }
+    }
+
+    // ==================================================
+    // REMOVE DUPLICATES
+    // ==================================================
+
+    return [
+      ...new Set(images),
+    ];
+  }, [news]);
+
+  const hasMultipleImages =
+    imageUrls.length > 1;
+
+  // ====================================================
+  // IMAGE NAVIGATION
+  // ====================================================
+
+  const handlePreviousImage =
+    () => {
+      if (
+        imageUrls.length <= 1
+      ) {
+        return;
+      }
+
+      setSelectedImageIndex(
+        (previous) =>
+          previous <= 0
+            ? imageUrls.length - 1
+            : previous - 1
+      );
+    };
+
+  const handleNextImage =
+    () => {
+      if (
+        imageUrls.length <= 1
+      ) {
+        return;
+      }
+
+      setSelectedImageIndex(
+        (previous) =>
+          previous >=
+          imageUrls.length - 1
+            ? 0
+            : previous + 1
+      );
+    };
+
+  // ====================================================
+  // OPEN GALLERY
+  // ====================================================
+
+  const handleImageClick = (
+    index
+  ) => {
+    setSelectedImageIndex(
+      index
+    );
+
+    setShowGalleryModal(
+      true
+    );
+  };
+
+  // ====================================================
+  // CLOSE GALLERY
+  // ====================================================
+
+  const handleCloseGallery =
+    () => {
+      setShowGalleryModal(
+        false
+      );
+    };
+
+  // ====================================================
+  // AUTOMATIC SLIDESHOW
+  // ====================================================
+
+  useEffect(() => {
+    if (
+      !hasMultipleImages ||
+      showGalleryModal ||
+      isAutoSlidePaused
+    ) {
+      return undefined;
+    }
+
+    const interval =
+      setInterval(() => {
+        setSelectedImageIndex(
+          (previous) =>
+            previous >=
+            imageUrls.length - 1
+              ? 0
+              : previous + 1
+        );
+      }, 5000);
+
+    return () => {
+      clearInterval(
+        interval
+      );
+    };
+  }, [
+    hasMultipleImages,
+    imageUrls.length,
+    showGalleryModal,
+    isAutoSlidePaused,
+  ]);
+
+  // ====================================================
+  // KEYBOARD CONTROLS
+  // ====================================================
+
+  useEffect(() => {
+    const handleKeyDown =
+      (event) => {
+        if (
+          !showGalleryModal
+        ) {
+          return;
+        }
+
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          handleCloseGallery();
+        }
+
+        if (
+          event.key ===
+          "ArrowLeft"
+        ) {
+          handlePreviousImage();
+        }
+
+        if (
+          event.key ===
+          "ArrowRight"
+        ) {
+          handleNextImage();
+        }
+      };
+
+    document.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    if (
+      showGalleryModal
+    ) {
+      document.body.style.overflow =
+        "hidden";
+    } else {
+      document.body.style.overflow =
+        "";
+    }
+
+    return () => {
+      document.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
+      document.body.style.overflow =
+        "";
+    };
+  }, [
+    showGalleryModal,
+    imageUrls.length,
+  ]);
+
+  // ====================================================
+  // SHARE WHATSAPP
+  // ====================================================
 
   const shareOnWhatsApp =
     () => {
+      if (!news) {
+        return;
+      }
+
       const url =
         window.location.href;
 
-      const shareText =
-        `${news?.title || ""} ${url}`;
+      const text =
+        `${news.title || ""} ${url}`;
 
       window.open(
         `https://wa.me/?text=${encodeURIComponent(
-          shareText
+          text
         )}`,
         "_blank",
         "noopener,noreferrer"
       );
     };
 
-  // ==================================================
-  // SHARE - FACEBOOK
-  // ==================================================
+  // ====================================================
+  // SHARE FACEBOOK
+  // ====================================================
 
   const shareOnFacebook =
     () => {
@@ -259,9 +604,9 @@ function NewsDetails() {
       );
     };
 
-  // ==================================================
+  // ====================================================
   // COPY LINK
-  // ==================================================
+  // ====================================================
 
   const copyLink =
     async () => {
@@ -275,17 +620,17 @@ function NewsDetails() {
             ? "ಸುದ್ದಿಯ ಲಿಂಕ್ ಕಾಪಿ ಮಾಡಲಾಗಿದೆ."
             : "News link copied successfully."
         );
-      } catch (error) {
+      } catch (copyError) {
         console.error(
           "Unable to copy link:",
-          error
+          copyError
         );
       }
     };
 
-  // ==================================================
+  // ====================================================
   // LOADING
-  // ==================================================
+  // ====================================================
 
   if (loading) {
     return (
@@ -313,11 +658,14 @@ function NewsDetails() {
     );
   }
 
-  // ==================================================
+  // ====================================================
   // ERROR
-  // ==================================================
+  // ====================================================
 
-  if (error || !news) {
+  if (
+    error ||
+    !news
+  ) {
     return (
       <main className="news-details-page">
 
@@ -333,9 +681,11 @@ function NewsDetails() {
                   : "News not available"}
               </h2>
 
-              <p>
-                {error}
-              </p>
+              {error && (
+                <p>
+                  {error}
+                </p>
+              )}
 
               <Link
                 to="/news"
@@ -354,15 +704,17 @@ function NewsDetails() {
     );
   }
 
-  // ==================================================
+  // ====================================================
   // ARTICLE DATA
-  // ==================================================
+  // ====================================================
 
   const title =
-    news.title || "";
+    news.title ||
+    "";
 
   const description =
-    news.description || "";
+    news.description ||
+    "";
 
   const category =
     getCategoryName(
@@ -372,22 +724,16 @@ function NewsDetails() {
   const date =
     formatDate(
       news.publishedAt ||
-        news.createdAt
+      news.createdAt
     );
 
   const author =
     news.author ||
     "ಸಮಾನತೆ ಧ್ವನಿ";
 
-  const image =
-    news.image || "";
-
-  /*
-    Backend currently stores content
-    as one String.
-
-    Split paragraphs using blank lines.
-  */
+  // ====================================================
+  // ARTICLE CONTENT
+  // ====================================================
 
   const content =
     news.content
@@ -399,9 +745,9 @@ function NewsDetails() {
           )
       : [];
 
-  // ==================================================
-  // PREPARE RELATED NEWS
-  // ==================================================
+  // ====================================================
+  // RELATED NEWS
+  // ====================================================
 
   const preparedRelatedNews =
     relatedNews.map(
@@ -420,14 +766,14 @@ function NewsDetails() {
         date:
           formatDate(
             item.publishedAt ||
-              item.createdAt
+            item.createdAt
           ),
       })
     );
 
-  // ==================================================
+  // ====================================================
   // RENDER
-  // ==================================================
+  // ====================================================
 
   return (
     <main className="news-details-page">
@@ -438,17 +784,19 @@ function NewsDetails() {
 
           <div className="news-details-layout">
 
-            {/* ====================================
-                MAIN ARTICLE
-            ==================================== */}
+            {/* ==========================================
+                ARTICLE
+            ========================================== */}
 
             <article className="news-article">
 
               {/* CATEGORY */}
 
-              <div className="article-category">
-                {category}
-              </div>
+              {category && (
+                <div className="article-category">
+                  {category}
+                </div>
+              )}
 
               {/* TITLE */}
 
@@ -480,20 +828,215 @@ function NewsDetails() {
 
               </div>
 
-              {/* IMAGE */}
+              {/* ========================================
+                  IMAGE GALLERY
+              ======================================== */}
 
-              {image && (
-                <div className="article-image">
+              {imageUrls.length > 0 && (
 
-                  <img
-                    src={image}
-                    alt={title}
-                  />
+                <div
+                  className="article-gallery"
+                  onMouseEnter={() =>
+                    setIsAutoSlidePaused(
+                      true
+                    )
+                  }
+                  onMouseLeave={() =>
+                    setIsAutoSlidePaused(
+                      false
+                    )
+                  }
+                >
+
+                  {/* MAIN IMAGE */}
+
+                  <div
+                    className="gallery-main-image"
+                    onClick={() =>
+                      handleImageClick(
+                        selectedImageIndex
+                      )
+                    }
+                  >
+
+                    <img
+                      src={
+                        imageUrls[
+                          selectedImageIndex
+                        ]
+                      }
+                      alt={`${title} - ${
+                        selectedImageIndex + 1
+                      }`}
+                    />
+
+                    {/* IMAGE COUNTER */}
+
+                    {hasMultipleImages && (
+                      <div className="gallery-image-count">
+
+                        <span>
+                          {selectedImageIndex + 1}
+                          {" / "}
+                          {imageUrls.length}
+                        </span>
+
+                        <span className="gallery-click-hint">
+                          {language === "kn"
+                            ? "ಸ್ವಯಂಚಾಲಿತ ಸ್ಲೈಡ್ • ವೀಕ್ಷಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ"
+                            : "Auto slideshow • Click to view"}
+                        </span>
+
+                      </div>
+                    )}
+
+                    {/* PREVIOUS */}
+
+                    {hasMultipleImages && (
+                      <button
+                        type="button"
+                        className="gallery-main-arrow gallery-main-arrow-prev"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          handlePreviousImage();
+                        }}
+                        aria-label={
+                          language === "kn"
+                            ? "ಹಿಂದಿನ ಚಿತ್ರ"
+                            : "Previous image"
+                        }
+                      >
+                        ‹
+                      </button>
+                    )}
+
+                    {/* NEXT */}
+
+                    {hasMultipleImages && (
+                      <button
+                        type="button"
+                        className="gallery-main-arrow gallery-main-arrow-next"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          handleNextImage();
+                        }}
+                        aria-label={
+                          language === "kn"
+                            ? "ಮುಂದಿನ ಚಿತ್ರ"
+                            : "Next image"
+                        }
+                      >
+                        ›
+                      </button>
+                    )}
+
+                  </div>
+
+                  {/* ==================================
+                      DOTS
+                  ================================== */}
+
+                  {hasMultipleImages && (
+
+                    <div
+                      className="gallery-slide-dots"
+                      aria-label={
+                        language === "kn"
+                          ? "ಚಿತ್ರ ಆಯ್ಕೆ"
+                          : "Image selector"
+                      }
+                    >
+
+                      {imageUrls.map(
+                        (_, index) => (
+
+                          <button
+                            type="button"
+                            key={index}
+                            className={
+                              `gallery-slide-dot ${
+                                index ===
+                                selectedImageIndex
+                                  ? "active"
+                                  : ""
+                              }`
+                            }
+                            onClick={() =>
+                              setSelectedImageIndex(
+                                index
+                              )
+                            }
+                            aria-label={
+                              language === "kn"
+                                ? `ಚಿತ್ರ ${index + 1}`
+                                : `Image ${index + 1}`
+                            }
+                          />
+
+                        )
+                      )}
+
+                    </div>
+                  )}
+
+                  {/* ==================================
+                      THUMBNAILS
+                  ================================== */}
+
+                  {hasMultipleImages && (
+
+                    <div className="gallery-thumbnails">
+
+                      {imageUrls.map(
+                        (
+                          url,
+                          index
+                        ) => (
+
+                          <button
+                            type="button"
+                            key={index}
+                            className={
+                              `gallery-thumbnail ${
+                                index ===
+                                selectedImageIndex
+                                  ? "active"
+                                  : ""
+                              }`
+                            }
+                            onClick={() =>
+                              setSelectedImageIndex(
+                                index
+                              )
+                            }
+                            aria-label={
+                              language === "kn"
+                                ? `ಚಿತ್ರ ${index + 1} ಆಯ್ಕೆಮಾಡಿ`
+                                : `Select image ${index + 1}`
+                            }
+                          >
+
+                            <img
+                              src={url}
+                              alt={`${title} - ${
+                                index + 1
+                              }`}
+                            />
+
+                          </button>
+
+                        )
+                      )}
+
+                    </div>
+                  )}
 
                 </div>
               )}
 
-              {/* CONTENT */}
+              {/* ========================================
+                  ARTICLE CONTENT
+              ======================================== */}
 
               <div className="article-content">
 
@@ -502,21 +1045,21 @@ function NewsDetails() {
                     paragraph,
                     index
                   ) => (
+
                     <p
-                      key={
-                        index
-                      }
+                      key={index}
                     >
-                      {
-                        paragraph
-                      }
+                      {paragraph}
                     </p>
+
                   )
                 )}
 
               </div>
 
-              {/* SHARE */}
+              {/* ========================================
+                  SHARE
+              ======================================== */}
 
               <div className="article-share">
 
@@ -558,9 +1101,9 @@ function NewsDetails() {
 
             </article>
 
-            {/* ====================================
+            {/* ==========================================
                 SIDEBAR
-            ==================================== */}
+            ========================================== */}
 
             <aside className="news-sidebar">
 
@@ -576,10 +1119,10 @@ function NewsDetails() {
 
                 {preparedRelatedNews.length >
                 0 ? (
+
                   preparedRelatedNews.map(
-                    (
-                      item
-                    ) => (
+                    (item) => (
+
                       <NewsCard
                         key={
                           item.id
@@ -588,15 +1131,18 @@ function NewsDetails() {
                           item
                         }
                       />
+
                     )
                   )
+
                 ) : (
+
                   <p>
-                    {language ===
-                    "kn"
+                    {language === "kn"
                       ? "ಸಂಬಂಧಿತ ಸುದ್ದಿಗಳು ಲಭ್ಯವಿಲ್ಲ."
                       : "No related news available."}
                   </p>
+
                 )}
 
               </div>
@@ -615,6 +1161,168 @@ function NewsDetails() {
         </div>
 
       </section>
+
+      {/* ================================================
+          FULL SCREEN GALLERY MODAL
+      ================================================ */}
+
+      {showGalleryModal &&
+        imageUrls.length > 0 && (
+
+          <div
+            className="gallery-modal"
+            onClick={
+              handleCloseGallery
+            }
+          >
+
+            <div
+              className="gallery-modal-content"
+              onClick={(event) =>
+                event.stopPropagation()
+              }
+            >
+
+              {/* CLOSE */}
+
+              <button
+                type="button"
+                className="gallery-modal-close"
+                onClick={
+                  handleCloseGallery
+                }
+                aria-label={
+                  language === "kn"
+                    ? "ಗ್ಯಾಲರಿ ಮುಚ್ಚಿ"
+                    : "Close gallery"
+                }
+              >
+                ×
+              </button>
+
+              {/* COUNTER */}
+
+              <div className="gallery-modal-counter">
+
+                {selectedImageIndex + 1}
+                {" / "}
+                {imageUrls.length}
+
+              </div>
+
+              {/* IMAGE */}
+
+              <div className="gallery-modal-image">
+
+                <img
+                  src={
+                    imageUrls[
+                      selectedImageIndex
+                    ]
+                  }
+                  alt={`${title} - ${
+                    selectedImageIndex + 1
+                  }`}
+                />
+
+              </div>
+
+              {/* PREVIOUS */}
+
+              {hasMultipleImages && (
+
+                <button
+                  type="button"
+                  className="gallery-modal-nav prev"
+                  onClick={
+                    handlePreviousImage
+                  }
+                  aria-label={
+                    language === "kn"
+                      ? "ಹಿಂದಿನ ಚಿತ್ರ"
+                      : "Previous image"
+                  }
+                >
+                  ‹
+                </button>
+
+              )}
+
+              {/* NEXT */}
+
+              {hasMultipleImages && (
+
+                <button
+                  type="button"
+                  className="gallery-modal-nav next"
+                  onClick={
+                    handleNextImage
+                  }
+                  aria-label={
+                    language === "kn"
+                      ? "ಮುಂದಿನ ಚಿತ್ರ"
+                      : "Next image"
+                  }
+                >
+                  ›
+                </button>
+
+              )}
+
+              {/* MODAL THUMBNAILS */}
+
+              {hasMultipleImages && (
+
+                <div className="gallery-modal-thumbnails">
+
+                  {imageUrls.map(
+                    (
+                      url,
+                      index
+                    ) => (
+
+                      <button
+                        type="button"
+                        key={index}
+                        className={
+                          `gallery-modal-thumbnail ${
+                            index ===
+                            selectedImageIndex
+                              ? "active"
+                              : ""
+                          }`
+                        }
+                        onClick={() =>
+                          setSelectedImageIndex(
+                            index
+                          )
+                        }
+                        aria-label={
+                          language === "kn"
+                            ? `ಚಿತ್ರ ${index + 1}`
+                            : `Image ${index + 1}`
+                        }
+                      >
+
+                        <img
+                          src={url}
+                          alt={`Thumbnail ${
+                            index + 1
+                          }`}
+                        />
+
+                      </button>
+
+                    )
+                  )}
+
+                </div>
+              )}
+
+            </div>
+
+          </div>
+        )}
 
     </main>
   );

@@ -1,10 +1,9 @@
 /* ========================================
-   News Details Page
+   NEWS DETAILS PAGE
 ======================================== */
 
 .news-details-page {
   min-height: 70vh;
-
   background: #f7f7f7;
 }
 
@@ -14,43 +13,33 @@
 
 .news-details-layout {
   display: grid;
-
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
-
   gap: 30px;
-
   align-items: start;
 }
 
 
 /* ========================================
-   Article
+   ARTICLE
 ======================================== */
 
 .news-article {
   padding: 30px;
-
   background: #ffffff;
-
   border: 1px solid #e3e3e3;
 }
 
 .article-category {
   display: inline-block;
-
   margin-bottom: 12px;
-
   color: #b30000;
-
   font-size: 12px;
   font-weight: 700;
 }
 
 .article-title {
   margin: 0 0 15px;
-
   color: #222222;
-
   font-size: 34px;
   line-height: 1.4;
   font-weight: 700;
@@ -58,40 +47,344 @@
 
 .article-description {
   margin: 0 0 18px;
-
   color: #666666;
-
   font-size: 16px;
   line-height: 1.8;
 }
 
 
 /* ========================================
-   Article Meta
+   ARTICLE META
 ======================================== */
 
 .article-meta {
   display: flex;
-
   flex-wrap: wrap;
-
   gap: 20px;
 
   padding: 12px 0;
-
   margin-bottom: 20px;
 
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
 
   color: #888888;
-
   font-size: 12px;
 }
 
 
 /* ========================================
-   Article Image
+   ARTICLE GALLERY
+======================================== */
+
+.article-gallery {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+
+/* ========================================
+   MAIN IMAGE SLIDER
+======================================== */
+
+.gallery-main-image {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #111111;
+
+  aspect-ratio: 16 / 9;
+
+  cursor: pointer;
+
+  border-radius: 6px;
+}
+
+.gallery-main-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.4s ease;
+}
+
+.gallery-main-image:hover img {
+  transform: scale(1.015);
+}
+
+
+/* ========================================
+   SLIDER ARROWS
+======================================== */
+
+.gallery-main-arrow {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  color: #ffffff;
+
+  font-size: 30px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-main-arrow:hover {
+  background: rgba(179, 0, 0, 0.95);
+
+  transform: translateY(-50%) scale(1.08);
+}
+
+.gallery-main-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.gallery-main-arrow.prev {
+  left: 15px;
+}
+
+.gallery-main-arrow.next {
+  right: 15px;
+}
+
+
+/* ========================================
+   IMAGE COUNTER
+======================================== */
+
+.gallery-image-counter {
+  position: absolute;
+
+  top: 15px;
+  left: 15px;
+
+  z-index: 4;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  background: rgba(0, 0, 0, 0.7);
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+
+/* ========================================
+   PHOTO COUNT / CLICK HINT
+======================================== */
+
+.gallery-image-count {
+  position: absolute;
+
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 9px 13px;
+
+  border-radius: 5px;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+.gallery-click-hint {
+  opacity: 0.85;
+
+  font-weight: 400;
+}
+
+
+/* ========================================
+   SLIDER DOTS
+======================================== */
+
+.gallery-dots {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  margin-top: 12px;
+}
+
+.gallery-dot {
+  width: 8px;
+  height: 8px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #cccccc;
+
+  cursor: pointer;
+
+  transition:
+    width 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-dot:hover {
+  background: #999999;
+
+  transform: scale(1.15);
+}
+
+.gallery-dot.active {
+  width: 22px;
+
+  border-radius: 10px;
+
+  background: #b30000;
+}
+
+
+/* ========================================
+   THUMBNAIL STRIP
+======================================== */
+
+.gallery-thumbnails {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fill, minmax(90px, 1fr));
+
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.gallery-thumbnail {
+  position: relative;
+
+  overflow: hidden;
+
+  aspect-ratio: 16 / 9;
+
+  background: #eeeeee;
+
+  border: 2px solid transparent;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-thumbnail img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.gallery-thumbnail:hover {
+  border-color: #999999;
+
+  transform: translateY(-2px);
+}
+
+.gallery-thumbnail:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-thumbnail.active {
+  border-color: #b30000;
+}
+
+
+/* ========================================
+   THUMBNAIL OVERLAY
+======================================== */
+
+.gallery-thumbnail-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.58);
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   ARTICLE IMAGE
+   LEGACY SUPPORT
 ======================================== */
 
 .article-image {
@@ -117,7 +410,7 @@
 
 
 /* ========================================
-   Article Content
+   ARTICLE CONTENT
 ======================================== */
 
 .article-content {
@@ -134,7 +427,7 @@
 
 
 /* ========================================
-   Share
+   SHARE
 ======================================== */
 
 .article-share {
@@ -174,6 +467,10 @@
   font-weight: 600;
 
   cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .share-button.facebook {
@@ -190,11 +487,13 @@
 
 .share-button:hover {
   opacity: 0.85;
+
+  transform: translateY(-1px);
 }
 
 
 /* ========================================
-   Sidebar
+   SIDEBAR
 ======================================== */
 
 .news-sidebar {
@@ -224,7 +523,7 @@
 
 
 /* ========================================
-   Related News
+   RELATED NEWS
 ======================================== */
 
 .related-news-list {
@@ -253,7 +552,7 @@
 
 
 /* ========================================
-   All News Button
+   ALL NEWS BUTTON
 ======================================== */
 
 .all-news-button {
@@ -275,17 +574,318 @@
 
   font-size: 12px;
   font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .all-news-button:hover {
   background: #8f0000;
 
   color: #ffffff;
+
+  transform: translateY(-1px);
 }
 
 
 /* ========================================
-   Tablet
+   GALLERY MODAL
+======================================== */
+
+.gallery-modal {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.gallery-modal-content {
+  position: relative;
+
+  width: min(1100px, 100%);
+
+  max-height: 95vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+/* ========================================
+   MODAL CLOSE BUTTON
+======================================== */
+
+.gallery-modal-close {
+  position: absolute;
+
+  top: -10px;
+  right: -10px;
+
+  z-index: 20;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  color: #222222;
+
+  font-size: 30px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-modal-close:hover {
+  background: #ffffff;
+
+  transform: scale(1.08);
+}
+
+
+/* ========================================
+   MODAL COUNTER
+======================================== */
+
+.gallery-modal-counter {
+  position: absolute;
+
+  top: 15px;
+  left: 50%;
+
+  z-index: 10;
+
+  transform: translateX(-50%);
+
+  padding: 7px 13px;
+
+  border-radius: 20px;
+
+  background: rgba(0, 0, 0, 0.7);
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* ========================================
+   MODAL MAIN IMAGE
+======================================== */
+
+.gallery-modal-image {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  max-height: 75vh;
+
+  overflow: hidden;
+}
+
+.gallery-modal-image img {
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+
+  height: auto;
+  max-height: 75vh;
+
+  object-fit: contain;
+
+  border-radius: 4px;
+}
+
+
+/* ========================================
+   MODAL NAVIGATION
+======================================== */
+
+.gallery-modal-nav {
+  position: absolute;
+
+  top: 50%;
+
+  z-index: 15;
+
+  transform: translateY(-50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  color: #ffffff;
+
+  font-size: 42px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-modal-nav:hover {
+  background: rgba(179, 0, 0, 0.9);
+
+  transform: translateY(-50%) scale(1.08);
+}
+
+.gallery-modal-nav.prev {
+  left: 15px;
+}
+
+.gallery-modal-nav.next {
+  right: 15px;
+}
+
+
+/* ========================================
+   MODAL THUMBNAILS
+======================================== */
+
+.gallery-modal-thumbnails {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  width: 100%;
+
+  margin-top: 15px;
+
+  padding: 8px;
+
+  overflow-x: auto;
+
+  scrollbar-width: thin;
+}
+
+.gallery-modal-thumbnail {
+  flex: 0 0 80px;
+
+  width: 80px;
+  height: 50px;
+
+  overflow: hidden;
+
+  border: 2px solid transparent;
+
+  border-radius: 4px;
+
+  opacity: 0.65;
+
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gallery-modal-thumbnail img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.gallery-modal-thumbnail:hover {
+  opacity: 0.9;
+
+  transform: translateY(-2px);
+}
+
+.gallery-modal-thumbnail.active {
+  opacity: 1;
+
+  border-color: #ffffff;
+}
+
+
+/* ========================================
+   LOADING / ERROR MESSAGE
+======================================== */
+
+.news-details-message {
+  padding: 60px 25px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e3e3e3;
+}
+
+.news-details-message h2 {
+  margin: 0 0 10px;
+
+  color: #222222;
+
+  font-size: 24px;
+}
+
+.news-details-message p {
+  margin: 0 0 20px;
+
+  color: #777777;
+
+  font-size: 14px;
+}
+
+
+/* ========================================
+   TABLET
 ======================================== */
 
 @media (max-width: 900px) {
@@ -302,11 +902,75 @@
 
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .gallery-thumbnails {
+    grid-template-columns:
+      repeat(4, 1fr);
+  }
 }
 
 
 /* ========================================
-   Mobile
+   SMALL TABLET
+======================================== */
+
+@media (max-width: 768px) {
+  .news-details-section {
+    padding: 30px 0 50px;
+  }
+
+  .news-article {
+    padding: 24px;
+  }
+
+  .article-title {
+    font-size: 30px;
+  }
+
+  .gallery-main-arrow {
+    width: 38px;
+    height: 38px;
+
+    font-size: 27px;
+  }
+
+  .gallery-main-arrow.prev {
+    left: 10px;
+  }
+
+  .gallery-main-arrow.next {
+    right: 10px;
+  }
+
+  .gallery-image-count {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .gallery-modal {
+    padding: 15px;
+  }
+
+  .gallery-modal-nav {
+    width: 42px;
+    height: 42px;
+
+    font-size: 34px;
+  }
+
+  .gallery-modal-nav.prev {
+    left: 8px;
+  }
+
+  .gallery-modal-nav.next {
+    right: 8px;
+  }
+}
+
+
+/* ========================================
+   MOBILE
 ======================================== */
 
 @media (max-width: 576px) {
@@ -320,6 +984,7 @@
 
   .article-title {
     font-size: 25px;
+    line-height: 1.35;
   }
 
   .article-description {
@@ -328,13 +993,11 @@
 
   .article-content p {
     font-size: 14px;
-
     line-height: 1.8;
   }
 
   .article-meta {
     flex-direction: column;
-
     gap: 6px;
   }
 
@@ -348,5 +1011,210 @@
 
   .related-news-list {
     grid-template-columns: 1fr;
+  }
+
+  /* Main slider */
+  .gallery-main-image {
+    border-radius: 4px;
+  }
+
+  .gallery-main-arrow {
+    width: 34px;
+    height: 34px;
+
+    font-size: 24px;
+  }
+
+  .gallery-main-arrow.prev {
+    left: 8px;
+  }
+
+  .gallery-main-arrow.next {
+    right: 8px;
+  }
+
+  .gallery-image-counter {
+    top: 8px;
+    left: 8px;
+
+    padding: 5px 9px;
+
+    font-size: 11px;
+  }
+
+  .gallery-image-count {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+
+    padding: 7px 9px;
+
+    font-size: 10px;
+  }
+
+  .gallery-click-hint {
+    display: none;
+  }
+
+  /* Thumbnails */
+  .gallery-thumbnails {
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 7px;
+
+    margin-top: 9px;
+  }
+
+  .gallery-thumbnail {
+    border-width: 2px;
+  }
+
+  /* Dots */
+  .gallery-dots {
+    gap: 5px;
+
+    margin-top: 9px;
+  }
+
+  .gallery-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .gallery-dot.active {
+    width: 18px;
+  }
+
+  /* Modal */
+  .gallery-modal {
+    padding: 10px;
+  }
+
+  .gallery-modal-content {
+    max-height: 92vh;
+  }
+
+  .gallery-modal-close {
+    top: 5px;
+    right: 5px;
+
+    width: 36px;
+    height: 36px;
+
+    font-size: 25px;
+  }
+
+  .gallery-modal-counter {
+    top: 10px;
+
+    padding: 5px 10px;
+
+    font-size: 11px;
+  }
+
+  .gallery-modal-image {
+    max-height: 68vh;
+  }
+
+  .gallery-modal-image img {
+    max-height: 68vh;
+  }
+
+  .gallery-modal-nav {
+    width: 36px;
+    height: 36px;
+
+    font-size: 29px;
+  }
+
+  .gallery-modal-nav.prev {
+    left: 5px;
+  }
+
+  .gallery-modal-nav.next {
+    right: 5px;
+  }
+
+  .gallery-modal-thumbnails {
+    gap: 6px;
+
+    margin-top: 10px;
+  }
+
+  .gallery-modal-thumbnail {
+    flex-basis: 65px;
+
+    width: 65px;
+    height: 42px;
+  }
+}
+
+
+/* ========================================
+   VERY SMALL MOBILE
+======================================== */
+
+@media (max-width: 380px) {
+  .news-article {
+    padding: 15px;
+  }
+
+  .article-title {
+    font-size: 22px;
+  }
+
+  .gallery-thumbnails {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .gallery-main-arrow {
+    width: 30px;
+    height: 30px;
+
+    font-size: 21px;
+  }
+
+  .gallery-modal-nav {
+    width: 32px;
+    height: 32px;
+
+    font-size: 25px;
+  }
+}
+
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+.gallery-main-arrow:focus-visible,
+.gallery-dot:focus-visible,
+.gallery-thumbnail:focus-visible,
+.gallery-modal-close:focus-visible,
+.gallery-modal-nav:focus-visible,
+.gallery-modal-thumbnail:focus-visible {
+  outline: 2px solid #b30000;
+
+  outline-offset: 2px;
+}
+
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-main-image img,
+  .gallery-thumbnail,
+  .gallery-thumbnail img,
+  .gallery-main-arrow,
+  .gallery-dot,
+  .gallery-modal-nav,
+  .gallery-modal-thumbnail,
+  .share-button,
+  .all-news-button {
+    transition: none;
   }
 }

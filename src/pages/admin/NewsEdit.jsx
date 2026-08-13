@@ -41,25 +41,26 @@ function NewsEdit() {
   });
 
   // ==================================================
-  // IMAGE
+  // MULTIPLE IMAGES
+  // ==================================================
+  //
+  // The first image is always treated as the
+  // main / cover image.
+  //
+  // Existing image + imagePublicId fields are
+  // retained for backend compatibility.
   // ==================================================
 
-  const [image, setImage] = useState(null);
-
-  const [imagePreview, setImagePreview] =
-    useState("");
-
-  const [
-    currentImagePublicId,
-    setCurrentImagePublicId,
-  ] = useState("");
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [currentImages, setCurrentImages] = useState([]);
+  const [currentImagePublicId, setCurrentImagePublicId] = useState("");
 
   // ==================================================
   // CATEGORIES
   // ==================================================
 
-  const [categories, setCategories] =
-    useState([]);
+  const [categories, setCategories] = useState([]);
 
   // ==================================================
   // LOCATION DATA
@@ -277,17 +278,10 @@ function NewsEdit() {
   // PAGE STATE
   // ==================================================
 
-  const [loading, setLoading] =
-    useState(true);
-
-  const [saving, setSaving] =
-    useState(false);
-
-  const [message, setMessage] =
-    useState("");
-
-  const [error, setError] =
-    useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   // ==================================================
   // LOAD NEWS + CATEGORIES
@@ -400,16 +394,52 @@ function NewsEdit() {
         });
 
         // ==================================================
-        // IMAGE
+        // MULTIPLE IMAGES
         // ==================================================
 
-        setImagePreview(
-          news.image || ""
+        const loadedImages =
+          Array.isArray(news.images) &&
+          news.images.length > 0
+            ? news.images
+                .filter(
+                  (item) =>
+                    item &&
+                    item.url
+                )
+                .map((item) => ({
+                  url: item.url,
+                  publicId:
+                    item.publicId ||
+                    "",
+                  name:
+                    item.name ||
+                    "",
+                }))
+            : news.image
+            ? [
+                {
+                  url: news.image,
+                  publicId:
+                    news.imagePublicId ||
+                    "",
+                  name: "",
+                },
+              ]
+            : [];
+
+        setCurrentImages(
+          loadedImages
         );
 
         setCurrentImagePublicId(
-          news.imagePublicId || ""
+          loadedImages[0]
+            ?.publicId ||
+            news.imagePublicId ||
+            ""
         );
+
+        setImages([]);
+        setImagePreviews([]);
 
         // ==================================================
         // CATEGORIES
@@ -577,74 +607,232 @@ function NewsEdit() {
   };
 
   // ==================================================
-  // IMAGE CHANGE
+  // MULTIPLE IMAGE CHANGE
   // ==================================================
 
   const handleImageChange = (
     event
   ) => {
-    const file =
-      event.target.files?.[0];
+    const selectedFiles =
+      Array.from(
+        event.target.files || []
+      );
 
-    if (!file) {
+    if (
+      selectedFiles.length ===
+      0
+    ) {
       return;
     }
 
-    // Check image
-    if (
-      !file.type.startsWith(
-        "image/"
-      )
-    ) {
-      setError(
-        "ದಯವಿಟ್ಟು image file ಮಾತ್ರ ಆಯ್ಕೆಮಾಡಿ."
-      );
-
-      event.target.value = "";
-
-      return;
-    }
-
-    // 10MB limit
-    if (
-      file.size >
-      10 * 1024 * 1024
-    ) {
-      setError(
-        "ಚಿತ್ರದ ಗಾತ್ರ 10MB ಗಿಂತ ಕಡಿಮೆ ಇರಬೇಕು."
-      );
-
-      event.target.value = "";
-
-      return;
-    }
-
-    setImage(file);
-
-    /*
-      If previous preview is a local
-      blob URL, release it.
-    */
-
-    if (
-      imagePreview &&
-      imagePreview.startsWith(
-        "blob:"
-      )
-    ) {
-      URL.revokeObjectURL(
-        imagePreview
-      );
-    }
-
-    const preview =
-      URL.createObjectURL(file);
-
-    setImagePreview(preview);
+    const MAX_NEW_IMAGES = 10;
+    const MAX_FILE_SIZE =
+      10 * 1024 * 1024;
 
     setMessage("");
     setError("");
+
+    // Check total images (existing + new) doesn't exceed 10
+    const totalImages = currentImages.length + images.length + selectedFiles.length;
+    if (totalImages > 10) {
+      setError(
+        `ಒಟ್ಟು ಗರಿಷ್ಠ 10 ಚಿತ್ರಗಳನ್ನು ಮಾತ್ರ ಸೇರಿಸಬಹುದು. ಪ್ರಸ್ತುತ ${currentImages.length + images.length} ಚಿತ್ರಗಳಿವೆ.`
+      );
+      event.target.value = "";
+      return;
+    }
+
+    if (
+      selectedFiles.length >
+      MAX_NEW_IMAGES
+    ) {
+      setError(
+        `ಒಮ್ಮೆ ಗರಿಷ್ಠ ${MAX_NEW_IMAGES} ಹೊಸ ಚಿತ್ರಗಳನ್ನು ಆಯ್ಕೆಮಾಡಬಹುದು.`
+      );
+
+      event.target.value = "";
+      return;
+    }
+
+    const invalidFile =
+      selectedFiles.find(
+        (file) =>
+          !file.type.startsWith(
+            "image/"
+          )
+      );
+
+    if (invalidFile) {
+      setError(
+        "ದಯವಿಟ್ಟು image files ಮಾತ್ರ ಆಯ್ಕೆಮಾಡಿ."
+      );
+
+      event.target.value = "";
+      return;
+    }
+
+    const oversizedFile =
+      selectedFiles.find(
+        (file) =>
+          file.size >
+          MAX_FILE_SIZE
+      );
+
+    if (oversizedFile) {
+      setError(
+        "ಪ್ರತಿಯೊಂದು ಚಿತ್ರದ ಗಾತ್ರ 10MB ಗಿಂತ ಕಡಿಮೆ ಇರಬೇಕು."
+      );
+
+      event.target.value = "";
+      return;
+    }
+
+    // Release previous local preview URLs.
+    imagePreviews.forEach(
+      (preview) => {
+        if (
+          preview?.startsWith(
+            "blob:"
+          )
+        ) {
+          URL.revokeObjectURL(
+            preview
+          );
+        }
+      }
+    );
+
+    setImages(
+      (prev) => [...prev, ...selectedFiles]
+    );
+
+    setImagePreviews(
+      (prev) => [
+        ...prev,
+        ...selectedFiles.map(
+          (file) =>
+            URL.createObjectURL(
+              file
+            )
+        )
+      ]
+    );
+
+    event.target.value = "";
   };
+
+  // ==================================================
+  // REMOVE ONE EXISTING IMAGE
+  // ==================================================
+
+  const handleRemoveCurrentImage =
+    (index) => {
+      setCurrentImages(
+        (previous) =>
+          previous.filter(
+            (_, imageIndex) =>
+              imageIndex !==
+              index
+          )
+      );
+
+      setMessage("");
+      setError("");
+    };
+
+  // ==================================================
+  // REMOVE ONE NEW IMAGE
+  // ==================================================
+
+  const handleRemoveNewImage =
+    (index) => {
+      // Calculate the actual index in the combined images array
+      const actualIndex = currentImages.length + index;
+
+      setImages(
+        (previous) =>
+          previous.filter(
+            (_, imageIndex) =>
+              imageIndex !==
+              index
+          )
+      );
+
+      setImagePreviews(
+        (previous) => {
+          const preview =
+            previous[index];
+
+          if (
+            preview?.startsWith(
+              "blob:"
+            )
+          ) {
+            URL.revokeObjectURL(
+              preview
+            );
+          }
+
+          return previous.filter(
+            (_, imageIndex) =>
+              imageIndex !==
+              index
+          );
+        }
+      );
+
+      setMessage("");
+      setError("");
+    };
+
+  // ==================================================
+  // CLEAR NEW IMAGES
+  // ==================================================
+
+  const handleClearNewImages =
+    () => {
+      imagePreviews.forEach(
+        (preview) => {
+          if (
+            preview?.startsWith(
+              "blob:"
+            )
+          ) {
+            URL.revokeObjectURL(
+              preview
+            );
+          }
+        }
+      );
+
+      setImages([]);
+      setImagePreviews([]);
+
+      setMessage("");
+      setError("");
+    };
+
+  // ==================================================
+  // CLEAN LOCAL PREVIEWS
+  // ==================================================
+
+  useEffect(() => {
+    return () => {
+      imagePreviews.forEach(
+        (preview) => {
+          if (
+            preview?.startsWith(
+              "blob:"
+            )
+          ) {
+            URL.revokeObjectURL(
+              preview
+            );
+          }
+        }
+      );
+    };
+  }, [imagePreviews]);
 
   // ==================================================
   // CREATE SLUG
@@ -756,26 +944,21 @@ function NewsEdit() {
       setSaving(true);
 
       // ==================================================
-      // IMAGE
+      // MULTIPLE IMAGE UPLOAD
       // ==================================================
 
-      let imageUrl =
-        imagePreview || "";
+      const uploadedNewImages =
+        [];
 
-      let imagePublicId =
-        currentImagePublicId || "";
-
-      // ==================================================
-      // NEW IMAGE
-      // ==================================================
-
-      if (image) {
+      for (
+        const imageFile of images
+      ) {
         const mediaFormData =
           new FormData();
 
         mediaFormData.append(
           "file",
-          image
+          imageFile
         );
 
         const mediaResponse =
@@ -786,19 +969,48 @@ function NewsEdit() {
         const uploadedMedia =
           mediaResponse?.media;
 
-        if (!uploadedMedia) {
+        if (
+          !uploadedMedia?.url
+        ) {
           throw new Error(
-            "ಹೊಸ ಚಿತ್ರವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+            `ಹೊಸ ಚಿತ್ರವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: ${imageFile.name}`
           );
         }
 
-        imageUrl =
-          uploadedMedia.url || "";
+        uploadedNewImages.push(
+          {
+            url:
+              uploadedMedia.url,
 
-        imagePublicId =
-          uploadedMedia.publicId ||
-          "";
+            publicId:
+              uploadedMedia.publicId ||
+              "",
+
+            name:
+              imageFile.name,
+          }
+        );
       }
+
+      // Keep existing images first and append
+      // newly uploaded images.
+      const finalImages = [
+        ...currentImages,
+        ...uploadedNewImages,
+      ];
+
+      // First image becomes main / cover image.
+      const mainImage =
+        finalImages[0] ||
+        null;
+
+      const imageUrl =
+        mainImage?.url ||
+        "";
+
+      const imagePublicId =
+        mainImage?.publicId ||
+        "";
 
       // ==================================================
       // LOCATION
@@ -863,6 +1075,10 @@ function NewsEdit() {
         imagePublicId:
           imagePublicId,
 
+        // All images belonging to this news.
+        images:
+          finalImages,
+
         location,
 
         // Also send these directly
@@ -881,7 +1097,7 @@ function NewsEdit() {
       };
 
       console.log(
-        "Updating news:",
+        "Updating news with images:",
         updatedNews
       );
 
@@ -1534,52 +1750,251 @@ function NewsEdit() {
 
 
             {/* ==================================================
-                MAIN IMAGE
+                NEWS IMAGES
             ================================================== */}
 
             <section className="admin-form-card">
 
               <h2 className="news-form-title">
-                ಮುಖ್ಯ ಚಿತ್ರ
+                ಸುದ್ದಿ ಚಿತ್ರಗಳು
               </h2>
+
+              <p className="location-help">
+                ಈ ಸುದ್ದಿಗೆ ಹಲವು ಚಿತ್ರಗಳನ್ನು
+                ಸೇರಿಸಬಹುದು. ಮೊದಲ ಚಿತ್ರವನ್ನು
+                ಮುಖ್ಯ / Cover ಚಿತ್ರವಾಗಿ ಬಳಸಲಾಗುತ್ತದೆ.
+              </p>
+
+              <p className="location-help" style={{ color: "#666", fontSize: "13px" }}>
+                ಗರಿಷ್ಠ 10 ಚಿತ್ರಗಳು | ಪ್ರತಿ ಚಿತ್ರ 10MB ಗಿಂತ ಕಡಿಮೆ
+              </p>
+
+              {/* ================================================
+                  ADD NEW IMAGES
+              ================================================= */}
 
               <div className="news-image-upload">
 
                 <input
                   type="file"
-                  id="newsImage"
+                  id="newsImages"
                   accept="image/*"
+                  multiple
                   onChange={
                     handleImageChange
                   }
-                  disabled={saving}
+                  disabled={saving || currentImages.length + images.length >= 10}
                 />
 
-                <label htmlFor="newsImage">
-                  ಹೊಸ ಚಿತ್ರ ಆಯ್ಕೆಮಾಡಿ
+                <label htmlFor="newsImages">
+                  📷 ಹೊಸ ಚಿತ್ರಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ
+                  {currentImages.length + images.length > 0 && 
+                    ` (${currentImages.length + images.length}/10)`}
                 </label>
 
               </div>
 
-
-              {imagePreview && (
-                <div className="news-image-preview">
-
-                  <img
-                    src={
-                      imagePreview
-                    }
-                    alt="News preview"
-                  />
-
-                  <p>
-                    {image
-                      ? image.name
-                      : "ಪ್ರಸ್ತುತ ಮುಖ್ಯ ಚಿತ್ರ"}
-                  </p>
-
+              {/* Image count info */}
+              {currentImages.length + images.length === 10 && (
+                <div style={{ 
+                  marginTop: "8px", 
+                  fontSize: "13px", 
+                  color: "#ff6b6b",
+                  fontWeight: "600"
+                }}>
+                  ⚠️ ಗರಿಷ್ಠ 10 ಚಿತ್ರಗಳು ಸೇರಿವೆ. ಇನ್ನೂ ಸೇರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.
                 </div>
               )}
+
+              {/* ================================================
+                  CURRENT IMAGES
+              ================================================= */}
+
+              {currentImages.length > 0 && (
+                <div className="news-multiple-image-grid">
+                  {currentImages.map(
+                    (
+                      currentImage,
+                      index
+                    ) => (
+                      <div
+                        key={
+                          `${
+                            currentImage.publicId ||
+                            currentImage.url
+                          }-${index}`
+                        }
+                        className="news-image-card"
+                      >
+                        <div className="news-image-wrapper">
+                          <img
+                            src={
+                              currentImage.url
+                            }
+                            alt={
+                              currentImage.name ||
+                              `News image ${
+                                index + 1
+                              }`
+                            }
+                            className="news-image-preview"
+                          />
+
+                          {index === 0 && (
+                            <span className="news-image-main-badge">
+                              ಮುಖ್ಯ ಚಿತ್ರ
+                            </span>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleRemoveCurrentImage(
+                                index
+                              )
+                            }
+                            disabled={saving}
+                            className="news-image-remove-btn"
+                            title="ಚಿತ್ರ ತೆಗೆದುಹಾಕಿ"
+                            aria-label={`ಚಿತ್ರ ${
+                              index + 1
+                            } ತೆಗೆದುಹಾಕಿ`}
+                          >
+                            ×
+                          </button>
+                        </div>
+
+                        <div
+                          className="news-image-filename"
+                          title={
+                            currentImage.name ||
+                            ""
+                          }
+                        >
+                          {index + 1}.{" "}
+                          {currentImage.name ||
+                            "ಪ್ರಸ್ತುತ ಚಿತ್ರ"}
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+
+
+              {/* ================================================
+                  NEW IMAGE PREVIEWS
+              ================================================= */}
+
+              {imagePreviews.length > 0 && (
+                <>
+                  <div className="news-multiple-images-summary">
+                    <strong>
+                      {images.length} ಹೊಸ
+                      ಚಿತ್ರಗಳು ಆಯ್ಕೆಯಾಗಿವೆ
+                    </strong>
+
+                    <button
+                      type="button"
+                      className="admin-secondary-button"
+                      onClick={
+                        handleClearNewImages
+                      }
+                      disabled={
+                        saving
+                      }
+                      style={{ padding: "6px 14px", fontSize: "13px" }}
+                    >
+                      ಎಲ್ಲಾ ತೆಗೆದುಹಾಕಿ
+                    </button>
+                  </div>
+
+                  <div className="news-multiple-image-grid">
+                    {imagePreviews.map(
+                      (
+                        preview,
+                        index
+                      ) => {
+                        const globalIndex = currentImages.length + index;
+                        return (
+                          <div
+                            key={`${preview}-${index}`}
+                            className="news-image-card"
+                          >
+                            <div className="news-image-wrapper">
+                              <img
+                                src={preview}
+                                alt={
+                                  images[index]
+                                    ?.name ||
+                                  `New image ${
+                                    index + 1
+                                  }`
+                                }
+                                className="news-image-preview"
+                              />
+
+                              {globalIndex === 0 && currentImages.length === 0 && (
+                                <span className="news-image-main-badge">
+                                  ಮುಖ್ಯ ಚಿತ್ರ
+                                </span>
+                              )}
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleRemoveNewImage(
+                                    index
+                                  )
+                                }
+                                disabled={
+                                  saving
+                                }
+                                className="news-image-remove-btn"
+                                title="ಚಿತ್ರ ತೆಗೆದುಹಾಕಿ"
+                                aria-label={`ಹೊಸ ಚಿತ್ರ ${
+                                  index + 1
+                                } ತೆಗೆದುಹಾಕಿ`}
+                              >
+                                ×
+                              </button>
+                            </div>
+
+                            <div
+                              className="news-image-filename"
+                              title={
+                                images[index]
+                                  ?.name ||
+                                ""
+                              }
+                            >
+                              {globalIndex + 1}.{" "}
+                              {images[index]
+                                ?.name ||
+                                "ಹೊಸ ಚಿತ್ರ"}
+                            </div>
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* No images message */}
+              {currentImages.length === 0 && images.length === 0 && (
+                <div className="news-no-images">
+                  <p>ಯಾವುದೇ ಚಿತ್ರ ಆಯ್ಕೆ ಮಾಡಲಾಗಿಲ್ಲ</p>
+                  <small>ಮೇಲಿನ ಬಟನ್ ಕ್ಲಿಕ್ ಮಾಡಿ ಚಿತ್ರಗಳನ್ನು ಸೇರಿಸಿ</small>
+                </div>
+              )}
+
+              <small className="news-language-help">
+                💡 ಹಳೆಯ ಚಿತ್ರವನ್ನು ತೆಗೆದುಹಾಕಿ
+                ಹೊಸ ಚಿತ್ರ ಸೇರಿಸಿದರೆ, ಉಳಿಸುವಾಗ
+                backend ಹಳೆಯ ಬಳಕೆಯಲ್ಲಿಲ್ಲದ
+                Cloudinary ಚಿತ್ರವನ್ನು ಅಳಿಸುತ್ತದೆ.
+              </small>
 
             </section>
 

@@ -419,14 +419,18 @@ function Header() {
             }
           >
 
-            {/* Brand Name */}
+            {/* =========================================
+                BRAND NAME
+            ========================================= */}
 
             <span className="brand-name">
               {settings.siteName ||
                 "ಸಮಾನತೆಯ ಧ್ವನಿ"}
             </span>
 
-            {/* Tagline / Sub Heading */}
+            {/* =========================================
+                TAGLINE / SUB HEADING
+            ========================================= */}
 
             <span className="brand-tagline">
               {tagline}

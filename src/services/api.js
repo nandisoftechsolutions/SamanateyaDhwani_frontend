@@ -2,9 +2,28 @@
 // API CONFIGURATION
 // ======================================================
 
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  "https://samanateyadhwani-backend.onrender.com/api";
+// Determine the appropriate API URL based on environment
+const getApiUrl = () => {
+  // 1. If VITE_API_URL is set in environment variables, use it
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL.replace(/\/+$/, '');
+  }
+
+  // 2. Check if we're running locally
+  const isLocal = 
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname === '::1';
+
+  if (isLocal) {
+    return 'http://localhost:5000/api';
+  }
+
+  // 3. Production default
+  return 'https://samanateyadhwani-backend.onrender.com/api';
+};
+
+const API_URL = getApiUrl();
 
 
 // ======================================================
@@ -48,32 +67,55 @@ const apiRequest = async (
       `Bearer ${token}`;
   }
 
-  const response = await fetch(
-    `${API_URL}${endpoint}`,
-    {
-      ...options,
-      headers,
-    }
-  );
-
-  let data;
+  // Ensure endpoint doesn't have leading slash issues
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  
+  // Ensure API_URL doesn't have trailing slash
+  const baseUrl = API_URL.replace(/\/+$/, '');
+  
+  const url = `${baseUrl}${cleanEndpoint}`;
 
   try {
-    data = await response.json();
-  } catch (error) {
-    throw new Error(
-      "Invalid response from server."
+    const response = await fetch(
+      url,
+      {
+        ...options,
+        headers,
+      }
     );
-  }
 
-  if (!response.ok) {
-    throw new Error(
-      data.message ||
+    let data;
+
+    try {
+      data = await response.json();
+    } catch (error) {
+      // If response is empty or not JSON
+      if (response.ok) {
+        return { success: true };
+      }
+      throw new Error(
+        "Invalid response from server."
+      );
+    }
+
+    if (!response.ok) {
+      throw new Error(
+        data.message ||
+        data.error ||
         "Something went wrong."
-    );
-  }
+      );
+    }
 
-  return data;
+    return data;
+  } catch (error) {
+    // Network errors or other fetch-related errors
+    if (error.name === 'TypeError' || error.message === 'Failed to fetch') {
+      throw new Error(
+        "Network error: Unable to connect to the server. Please check your internet connection."
+      );
+    }
+    throw error;
+  }
 };
 
 
@@ -135,6 +177,9 @@ export const logoutAdmin =
           method: "POST",
         }
       );
+    } catch (error) {
+      // Even if logout fails on server, clear local storage
+      console.warn("Logout error:", error.message);
     } finally {
       localStorage.removeItem(
         "adminToken"
@@ -463,8 +508,11 @@ export const uploadMedia =
         `Bearer ${token}`;
     }
 
+    // Ensure API_URL doesn't have trailing slash
+    const baseUrl = API_URL.replace(/\/+$/, '');
+    
     const response = await fetch(
-      `${API_URL}/media/upload`,
+      `${baseUrl}/media/upload`,
       {
         method: "POST",
 
@@ -670,8 +718,11 @@ export const addMonthlyPaper =
         `Bearer ${token}`;
     }
 
+    // Ensure API_URL doesn't have trailing slash
+    const baseUrl = API_URL.replace(/\/+$/, '');
+    
     const response = await fetch(
-      `${API_URL}/monthly-papers`,
+      `${baseUrl}/monthly-papers`,
       {
         method: "POST",
 
@@ -721,8 +772,11 @@ export const updateMonthlyPaper =
         `Bearer ${token}`;
     }
 
+    // Ensure API_URL doesn't have trailing slash
+    const baseUrl = API_URL.replace(/\/+$/, '');
+    
     const response = await fetch(
-      `${API_URL}/monthly-papers/${id}`,
+      `${baseUrl}/monthly-papers/${id}`,
       {
         method: "PUT",
 

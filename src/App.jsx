@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 // ======================================================
 // COMMON / PUBLIC COMPONENTS
@@ -162,6 +169,15 @@ function PublicLayout() {
             element={<Contact />}
           />
 
+          {/* ==================================================
+              PUBLIC 404
+          ================================================== */}
+
+          <Route
+            path="*"
+            element={<PublicNotFound />}
+          />
+
         </Routes>
 
       </main>
@@ -173,6 +189,72 @@ function PublicLayout() {
       <Footer />
 
     </div>
+  );
+}
+
+// ======================================================
+// PUBLIC 404 PAGE
+// ======================================================
+
+function PublicNotFound() {
+  return (
+    <section
+      className="app-not-found"
+      style={{
+        minHeight: "60vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "40px 20px",
+        textAlign: "center",
+      }}
+    >
+      <div>
+
+        <h1
+          style={{
+            margin: "0 0 10px",
+            fontSize: "56px",
+            fontWeight: "800",
+          }}
+        >
+          404
+        </h1>
+
+        <h2
+          style={{
+            margin: "0 0 10px",
+          }}
+        >
+          Page Not Found
+        </h2>
+
+        <p
+          style={{
+            margin: "0 0 20px",
+            color: "#666",
+          }}
+        >
+          The page you are looking for does not exist.
+        </p>
+
+        <a
+          href="/"
+          style={{
+            display: "inline-block",
+            padding: "10px 18px",
+            borderRadius: "5px",
+            background: "#b30000",
+            color: "#ffffff",
+            textDecoration: "none",
+            fontWeight: "600",
+          }}
+        >
+          Go to Home
+        </a>
+
+      </div>
+    </section>
   );
 }
 
@@ -199,7 +281,7 @@ function AdminLayout() {
         <Routes>
 
           {/* ==================================================
-              DASHBOARD
+              ADMIN DASHBOARD
           ================================================== */}
 
           <Route
@@ -279,11 +361,86 @@ function AdminLayout() {
             element={<Settings />}
           />
 
+          {/* ==================================================
+              ADMIN 404
+          ================================================== */}
+
+          <Route
+            path="*"
+            element={<AdminNotFound />}
+          />
+
         </Routes>
 
       </main>
 
     </div>
+  );
+}
+
+// ======================================================
+// ADMIN 404 PAGE
+// ======================================================
+
+function AdminNotFound() {
+  return (
+    <section
+      className="admin-not-found"
+      style={{
+        minHeight: "70vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "40px 20px",
+        textAlign: "center",
+      }}
+    >
+      <div>
+
+        <h1
+          style={{
+            margin: "0 0 10px",
+            fontSize: "56px",
+            fontWeight: "800",
+          }}
+        >
+          404
+        </h1>
+
+        <h2
+          style={{
+            margin: "0 0 10px",
+          }}
+        >
+          Admin Page Not Found
+        </h2>
+
+        <p
+          style={{
+            margin: "0 0 20px",
+            color: "#666",
+          }}
+        >
+          The requested admin page does not exist.
+        </p>
+
+        <a
+          href="/admin"
+          style={{
+            display: "inline-block",
+            padding: "10px 18px",
+            borderRadius: "5px",
+            background: "#b30000",
+            color: "#ffffff",
+            textDecoration: "none",
+            fontWeight: "600",
+          }}
+        >
+          Go to Dashboard
+        </a>
+
+      </div>
+    </section>
   );
 }
 
@@ -308,6 +465,18 @@ function App() {
 
         {/* ==================================================
             ADMIN PANEL
+        ==================================================
+        
+            /admin
+            /admin/news
+            /admin/news/add
+            /admin/news/edit/:id
+            /admin/categories
+            /admin/media
+            /admin/monthly-paper
+            /admin/users
+            /admin/settings
+        
         ================================================== */}
 
         <Route
@@ -317,6 +486,19 @@ function App() {
 
         {/* ==================================================
             PUBLIC WEBSITE
+        ==================================================
+        
+            /
+            /news
+            /news/:id
+            /category/:slug
+            /videos
+            /gallery
+            /search
+            /monthly-paper
+            /about
+            /contact
+        
         ================================================== */}
 
         <Route

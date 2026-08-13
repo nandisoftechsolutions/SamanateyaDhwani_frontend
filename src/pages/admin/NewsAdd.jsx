@@ -54,8 +54,13 @@ function NewsAdd() {
   // IMAGE
   // ==================================================
 
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
+  // ==================================================
+  // MULTIPLE IMAGES
+  // ==================================================
+
+  // First image is the main / cover image.
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   // ==================================================
   // UI
@@ -270,16 +275,18 @@ function NewsAdd() {
       : [];
 
   // ==================================================
-  // CLEAN IMAGE PREVIEW
+  // CLEAN IMAGE PREVIEWS
   // ==================================================
 
   useEffect(() => {
     return () => {
-      if (imagePreview) {
-        URL.revokeObjectURL(imagePreview);
-      }
+      imagePreviews.forEach((preview) => {
+        if (preview?.startsWith("blob:")) {
+          URL.revokeObjectURL(preview);
+        }
+      });
     };
-  }, [imagePreview]);
+  }, [imagePreviews]);
 
   // ==================================================
   // HANDLE NORMAL INPUT
@@ -428,55 +435,92 @@ function NewsAdd() {
   };
 
   // ==================================================
-  // IMAGE CHANGE
+  // MULTIPLE IMAGE CHANGE
   // ==================================================
 
   const handleImageChange = (event) => {
-    const file =
-      event.target.files?.[0];
+    const selectedFiles = Array.from(event.target.files || []);
 
-    if (!file) {
-      return;
-    }
+    if (!selectedFiles.length) return;
 
-    if (
-      !file.type.startsWith("image/")
-    ) {
+    const MAX_IMAGES = 10;
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+    setMessage("");
+    setError("");
+
+    if (selectedFiles.length > MAX_IMAGES) {
       setError(
-        "ದಯವಿಟ್ಟು image file ಮಾತ್ರ ಆಯ್ಕೆಮಾಡಿ."
+        `ಒಂದು ಸುದ್ದಿಗೆ ಗರಿಷ್ಠ ${MAX_IMAGES} ಚಿತ್ರಗಳನ್ನು ಮಾತ್ರ ಆಯ್ಕೆಮಾಡಬಹುದು.`
       );
-
       event.target.value = "";
-
       return;
     }
 
-    if (
-      file.size >
-      10 * 1024 * 1024
-    ) {
-      setError(
-        "ಚಿತ್ರದ ಗಾತ್ರ 10MB ಗಿಂತ ಕಡಿಮೆ ಇರಬೇಕು."
-      );
-
+    if (selectedFiles.some((file) => !file.type.startsWith("image/"))) {
+      setError("ದಯವಿಟ್ಟು image files ಮಾತ್ರ ಆಯ್ಕೆಮಾಡಿ.");
       event.target.value = "";
-
       return;
     }
 
-    setImage(file);
-
-    if (imagePreview) {
-      URL.revokeObjectURL(
-        imagePreview
-      );
+    if (selectedFiles.some((file) => file.size > MAX_FILE_SIZE)) {
+      setError("ಪ್ರತಿಯೊಂದು ಚಿತ್ರದ ಗಾತ್ರ 10MB ಗಿಂತ ಕಡಿಮೆ ಇರಬೇಕು.");
+      event.target.value = "";
+      return;
     }
 
-    const preview =
-      URL.createObjectURL(file);
+    imagePreviews.forEach((preview) => {
+      if (preview?.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+    });
 
-    setImagePreview(preview);
+    setImages(selectedFiles);
+    setImagePreviews(
+      selectedFiles.map((file) => URL.createObjectURL(file))
+    );
 
+    event.target.value = "";
+  };
+
+  // ==================================================
+  // REMOVE ONE IMAGE
+  // ==================================================
+
+  const handleRemoveImage = (index) => {
+    setImages((previous) =>
+      previous.filter((_, imageIndex) => imageIndex !== index)
+    );
+
+    setImagePreviews((previous) => {
+      const preview = previous[index];
+
+      if (preview?.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+
+      return previous.filter(
+        (_, imageIndex) => imageIndex !== index
+      );
+    });
+
+    setMessage("");
+    setError("");
+  };
+
+  // ==================================================
+  // CLEAR ALL IMAGES
+  // ==================================================
+
+  const handleClearImages = () => {
+    imagePreviews.forEach((preview) => {
+      if (preview?.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+    });
+
+    setImages([]);
+    setImagePreviews([]);
     setMessage("");
     setError("");
   };
@@ -596,41 +640,41 @@ function NewsAdd() {
       setSaving(true);
 
       // ==================================================
-      // IMAGE UPLOAD
+      // MULTIPLE IMAGE UPLOAD
       // ==================================================
 
-      let imageUrl = "";
-      let imagePublicId = "";
+      const uploadedImages = [];
 
-      if (image) {
-        const mediaFormData =
-          new FormData();
+      for (const imageFile of images) {
+        const mediaFormData = new FormData();
 
-        mediaFormData.append(
-          "file",
-          image
-        );
+        mediaFormData.append("file", imageFile);
 
         const mediaResponse =
-          await uploadMedia(
-            mediaFormData
-          );
+          await uploadMedia(mediaFormData);
 
         const uploadedMedia =
           mediaResponse?.media;
 
-        if (!uploadedMedia) {
+        if (!uploadedMedia?.url) {
           throw new Error(
-            "ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ."
+            `ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ: ${imageFile.name}`
           );
         }
 
-        imageUrl =
-          uploadedMedia.url || "";
-
-        imagePublicId =
-          uploadedMedia.publicId || "";
+        uploadedImages.push({
+          url: uploadedMedia.url,
+          publicId: uploadedMedia.publicId || "",
+          name: imageFile.name,
+        });
       }
+
+      // First image remains the main image.
+      const imageUrl =
+        uploadedImages[0]?.url || "";
+
+      const imagePublicId =
+        uploadedImages[0]?.publicId || "";
 
       // ==================================================
       // LOCATION
@@ -687,10 +731,15 @@ function NewsAdd() {
         breakingNews:
           formData.breakingNews,
 
+        // Main / cover image.
         image:
           imageUrl,
 
         imagePublicId,
+
+        // All images uploaded for this news.
+        images:
+          uploadedImages,
 
         // Link opened by clicking the news image / play button
         externalLink: normalizeUrl(
@@ -1473,168 +1522,176 @@ function NewsAdd() {
             </section>
 
 
-                        {/* ==================================================
-                IMAGE
+            {/* ==================================================
+                MULTIPLE IMAGES
             ================================================== */}
 
             <section className="admin-form-card">
 
               <h2 className="news-form-title">
-                ಮುಖ್ಯ ಚಿತ್ರ
+                ಸುದ್ದಿ ಚಿತ್ರಗಳು
               </h2>
+
+              <p className="location-help">
+                ಒಂದೇ ಸುದ್ದಿಗೆ ಹಲವು ಚಿತ್ರಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಬಹುದು.
+                ಮೊದಲ ಚಿತ್ರವನ್ನು ಮುಖ್ಯ / Cover ಚಿತ್ರವಾಗಿ ಬಳಸಲಾಗುತ್ತದೆ.
+                ಗರಿಷ್ಠ 10 ಚಿತ್ರಗಳು, ಪ್ರತಿ ಚಿತ್ರ 10MB ಒಳಗೆ.
+              </p>
 
               <div className="news-image-upload">
 
                 <input
                   type="file"
-                  id="newsImage"
+                  id="newsImages"
                   accept="image/*"
-                  onChange={
-                    handleImageChange
-                  }
+                  multiple
+                  onChange={handleImageChange}
                   disabled={saving}
                 />
 
-                <label htmlFor="newsImage">
-                  ಚಿತ್ರ ಆಯ್ಕೆಮಾಡಿ
+                <label htmlFor="newsImages">
+                  📷 ಹಲವು ಚಿತ್ರಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ
                 </label>
 
               </div>
 
+              {images.length > 0 && (
+                <div className="news-multiple-images-summary">
 
-              {imagePreview && (
-                <div className="news-image-preview">
+                  <strong>
+                    {images.length} ಚಿತ್ರಗಳು ಆಯ್ಕೆಯಾಗಿವೆ
+                  </strong>
 
-                  <div
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      cursor: formData.externalLink
-                        ? "pointer"
-                        : "default",
-                    }}
-                    onClick={() => {
-                      if (!formData.externalLink) {
-                        setError(
-                          "ಮೊದಲು ಚಿತ್ರ / Play Button Link ನಮೂದಿಸಿ."
-                        );
-                        return;
-                      }
-
-                      if (!isValidUrl(formData.externalLink)) {
-                        setError(
-                          "ದಯವಿಟ್ಟು ಸರಿಯಾದ ಲಿಂಕ್ ನಮೂದಿಸಿ."
-                        );
-                        return;
-                      }
-
-                      window.open(
-                        normalizeUrl(formData.externalLink),
-                        "_blank",
-                        "noopener,noreferrer"
-                      );
-                    }}
-                    role="link"
-                    tabIndex={0}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        event.currentTarget.click();
-                      }
-                    }}
-                    aria-label="Open linked news content"
+                  <button
+                    type="button"
+                    className="admin-secondary-button"
+                    onClick={handleClearImages}
+                    disabled={saving}
                   >
-
-                    <img
-                      src={imagePreview}
-                      alt="News preview"
-                      style={{
-                        display: "block",
-                        width: "100%",
-                      }}
-                    />
-
-                    <button
-                      type="button"
-                      aria-label="Open linked content"
-                      title={
-                        formData.externalLink
-                          ? "ಲಿಂಕ್ ತೆರೆಯಿರಿ"
-                          : "ಮೊದಲು ಲಿಂಕ್ ನಮೂದಿಸಿ"
-                      }
-                      onClick={(event) => {
-                        event.stopPropagation();
-
-                        if (!formData.externalLink) {
-                          setError(
-                            "ಮೊದಲು ಚಿತ್ರ / Play Button Link ನಮೂದಿಸಿ."
-                          );
-                          return;
-                        }
-
-                        if (!isValidUrl(formData.externalLink)) {
-                          setError(
-                            "ದಯವಿಟ್ಟು ಸರಿಯಾದ ಲಿಂಕ್ ನಮೂದಿಸಿ."
-                          );
-                          return;
-                        }
-
-                        window.open(
-                          normalizeUrl(formData.externalLink),
-                          "_blank",
-                          "noopener,noreferrer"
-                        );
-                      }}
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "64px",
-                        height: "64px",
-                        borderRadius: "50%",
-                        border: "3px solid #ffffff",
-                        background: "rgba(0, 0, 0, 0.72)",
-                        color: "#ffffff",
-                        fontSize: "28px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                        zIndex: 2,
-                      }}
-                    >
-                      ▶
-                    </button>
-
-                    {formData.externalLink && (
-                      <span
-                        style={{
-                          position: "absolute",
-                          left: "50%",
-                          bottom: "12px",
-                          transform: "translateX(-50%)",
-                          background: "rgba(0, 0, 0, 0.72)",
-                          color: "#ffffff",
-                          padding: "6px 12px",
-                          borderRadius: "20px",
-                          fontSize: "13px",
-                          whiteSpace: "nowrap",
-                          pointerEvents: "none",
-                        }}
-                      >
-                        🔗 Click to open link
-                      </span>
-                    )}
-
-                  </div>
-
-                  <p>
-                    {image?.name || "ಆಯ್ಕೆ ಮಾಡಿದ ಮುಖ್ಯ ಚಿತ್ರ"}
-                  </p>
+                    ಎಲ್ಲಾ ಚಿತ್ರಗಳನ್ನು ತೆಗೆದುಹಾಕಿ
+                  </button>
 
                 </div>
               )}
+
+              {imagePreviews.length > 0 && (
+                <div
+                  className="news-multiple-image-grid"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fill, minmax(160px, 1fr))",
+                    gap: "14px",
+                    marginTop: "16px",
+                  }}
+                >
+
+                  {imagePreviews.map(
+                    (preview, index) => (
+                      <div
+                        key={`${preview}-${index}`}
+                        style={{
+                          position: "relative",
+                          overflow: "hidden",
+                          borderRadius: "12px",
+                          border: "1px solid #ddd",
+                          background: "#f7f7f7",
+                        }}
+                      >
+
+                        <img
+                          src={preview}
+                          alt={
+                            images[index]?.name ||
+                            `News image ${index + 1}`
+                          }
+                          style={{
+                            display: "block",
+                            width: "100%",
+                            aspectRatio: "16 / 9",
+                            objectFit: "cover",
+                          }}
+                        />
+
+                        {index === 0 && (
+                          <span
+                            style={{
+                              position: "absolute",
+                              left: "8px",
+                              top: "8px",
+                              background: "#0066cc",
+                              color: "#fff",
+                              padding: "5px 8px",
+                              borderRadius: "6px",
+                              fontSize: "12px",
+                              fontWeight: "700",
+                            }}
+                          >
+                            ಮುಖ್ಯ ಚಿತ್ರ
+                          </span>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleRemoveImage(index)
+                          }
+                          disabled={saving}
+                          aria-label={`ಚಿತ್ರ ${index + 1} ತೆಗೆದುಹಾಕಿ`}
+                          title="ಚಿತ್ರ ತೆಗೆದುಹಾಕಿ"
+                          style={{
+                            position: "absolute",
+                            right: "8px",
+                            top: "8px",
+                            width: "30px",
+                            height: "30px",
+                            border: "0",
+                            borderRadius: "50%",
+                            background: "rgba(0,0,0,0.75)",
+                            color: "#fff",
+                            cursor: "pointer",
+                            fontSize: "16px",
+                            fontWeight: "700",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          ×
+                        </button>
+
+                        <div
+                          style={{
+                            padding: "8px",
+                            fontSize: "12px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                          title={images[index]?.name || ""}
+                        >
+                          {index + 1}.{" "}
+                          {images[index]?.name || "ಚಿತ್ರ"}
+                        </div>
+
+                      </div>
+                    )
+                  )}
+
+                </div>
+              )}
+
+              <small
+                className="news-language-help"
+                style={{
+                  display: "block",
+                  marginTop: "12px",
+                }}
+              >
+                💡 ಮೊದಲ ಚಿತ್ರವನ್ನು main image ಆಗಿ ಬಳಸಲಾಗುತ್ತದೆ.
+                ಉಳಿದ ಚಿತ್ರಗಳನ್ನು news detail page ನಲ್ಲಿ gallery ಆಗಿ
+                ತೋರಿಸಬಹುದು.
+              </small>
 
             </section>
 
