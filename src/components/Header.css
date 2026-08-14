@@ -1380,3 +1380,66 @@
   }
 
 }
+
+/* =====================================================
+   REGISTRATION NUMBER
+   ===================================================== */
+
+.site-header {
+  position: relative;
+}
+
+.header-registration-number {
+  position: absolute;
+  top: 6px;
+  right: 20px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  font-family:
+    Arial,
+    "Noto Sans Kannada",
+    sans-serif;
+
+  font-size: 10px;
+  line-height: 1.2;
+
+  white-space: nowrap;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.header-registration-number .registration-label {
+  color: rgba(255, 205, 90, 0.9);
+  font-weight: 700;
+}
+
+.header-registration-number .registration-value {
+  color: rgba(15, 14, 14, 0.72);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .header-registration-number {
+    top: 4px;
+    right: 10px;
+
+    font-size: 8px;
+
+    max-width: calc(100% - 20px);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+}

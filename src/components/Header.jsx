@@ -351,11 +351,37 @@ function Header() {
     );
 
   // =====================================================
+  // REGISTRATION NUMBER
+  // =====================================================
+
+  const registrationNumber =
+    "DRVJ/ISOR/223/2026-2027";
+
+  // =====================================================
   // RETURN
   // =====================================================
 
   return (
     <header className="site-header">
+
+      {/* =================================================
+          REGISTRATION NUMBER
+          TOP RIGHT
+      ================================================= */}
+
+      <div
+        className="header-registration-number"
+        aria-label="Registration Number"
+      >
+        <span className="registration-label">
+          Reg. No.:
+        </span>
+
+        <span className="registration-value">
+          {registrationNumber}
+        </span>
+      </div>
+
 
       {/* =================================================
           TOP HEADER
